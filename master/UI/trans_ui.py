@@ -32,7 +32,7 @@ class TransWindow(QtWidgets.QMainWindow, TransWindowUi):
         apply_config = master_config.MasterConfig()
         file_list = apply_config.get_last_file()[::-1]
         for file_name in file_list:
-            self.file_action = QtWidgets.QAction('%s'%file_name[0], self)
+            self.file_action = QtWidgets.QAction('%s'%file_name, self)
             self.file_menu.addAction(self.file_action)
             self.file_action.triggered.connect(self.openfile)
         font_size = apply_config.get_font_size()

@@ -571,7 +571,8 @@ class GetSetServiceDialog(QtWidgets.QDialog, ui_setup.GetSetServiceDialogUI):
     """get service dialog class"""
     def __init__(self):
         super(GetSetServiceDialog, self).__init__()
-        # self.setup_ui()
+        if config.IS_USE_PYSIDE:
+            self.setup_ui()
 
         self.class_cb.addItems(tuple(['收藏'] + service_data.get_base_class()))
         self.class_cb.setCurrentIndex(-1)

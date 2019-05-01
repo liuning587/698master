@@ -102,7 +102,7 @@ class CommuPanel:
                 traceback.print_exc()
                 print('serial_run err quit')
                 break
-            if new_data == b'\x68':
+            if new_data in [b'\x68', b'\x98']:
                 re_data = b''
                 while new_data:
                     re_data += new_data
@@ -171,7 +171,7 @@ class CommuPanel:
             if not re_byte:
                 print('frontend disconnected')
                 break
-            if re_byte == b'\x68':
+            if re_byte in [b'\x68', b'\x98']:
                 re_byte += self.frontend_handle.recv(20480)
                 re_msg_buf += common.text2list(''.join(['%02X ' % x for x in re_byte]))
                 msgs = common.search_msg(re_msg_buf)
@@ -242,7 +242,7 @@ class CommuPanel:
             if not re_byte:
                 print('clint err quit')
                 break
-            if re_byte == b'\x68':
+            if re_byte in [b'\x68', b'\x98']:
                 re_byte += client_handle.recv(20480)
                 re_msg_buf += common.text2list(''.join(['%02X ' % x for x in re_byte]))
                 msgs = common.search_msg(re_msg_buf)

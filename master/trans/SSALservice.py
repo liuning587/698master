@@ -4,6 +4,7 @@ import master.trans.linklayer as linklayer_do
 import master.trans.service as applayer_do
 
 
+
 def take_ssal_app(m_list, FC, trans_res):
     """take_ssal_applayer"""
     offset = 0
@@ -27,7 +28,9 @@ class SSALService:
 
         # 数据长度
         lud_len = int(m_list[offset + 1] + m_list[offset], 16)
-        self.trans_res.add_row(m_list[offset: offset+2], '数据长度', 'LUD', '%d'%lud_len)
+        lud_len_right = len(m_list) - 4 if prm == 0 else len(m_list) - 2
+        brief = '数据长度(%s)'%('正确' if lud_len == lud_len_right else '错误(正确值 %02X %02X)'%(lud_len_right & 0xff, lud_len_right >> 8))
+        self.trans_res.add_row(m_list[offset: offset+2], brief, 'LUD', '%d'%lud_len)
         offset += 2
 
         if prm == 0:
@@ -36,7 +39,9 @@ class SSALService:
                         '', self.get_err_msg(err_code))
             offset += 2
 
-        if msg_type == 2 and dir == 0:  # 下行获取终端基本信息
+        if lud_len == 0:
+            pass
+        elif msg_type == 2 and dir == 0:  # 下行获取终端基本信息
             pass
         elif msg_type == 2 and dir == 1:  # 上行获取终端基本信息
             offset += self.take_terminal_info(m_list[offset:])
@@ -134,6 +139,7 @@ class SSALService:
                     'SSAL-string[%d]'%len12, ''.join(m_list[offset+2: offset+2 + len12]))
         offset += 2 + len12
         return offset
+
 
     def get_err_msg(self, err_code):
         """get_err_msg"""
