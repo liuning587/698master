@@ -34,7 +34,11 @@ def format_text(m_text, separator=' '):
     """format"""
     return list2text(text2list(m_text), separator=separator)
 
-def is_bit(value: 'int > 0', bit: 'int > 0'):
+def is_bit(value:'int > 0', bit:'int > 0'):
+    """chk bit """
+    return True if (value >> bit) & 1 else False
+
+def is_bit(value:'int > 0', bit:'int > 0'):
     """chk bit """
     return True if (value >> bit) & 1 else False
 
@@ -74,7 +78,7 @@ def get_apdu_list(m_list):
         return []
     msg_len = int(m_list[2] + m_list[1], 16) + 2
     server_addr_len = (int(m_list[4], 16) & 0x0f) + 1
-    return m_list[8 + server_addr_len: msg_len - 3]
+    return m_list[8 + server_addr_len : msg_len - 3]
 
 
 def get_msg_service_no(m_text):
