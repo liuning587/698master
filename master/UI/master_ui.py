@@ -31,7 +31,8 @@ class MasterWindow(QtWidgets.QMainWindow, MasterWindowUi):
 
     def __init__(self):
         super(MasterWindow, self).__init__()
-        self.setup_ui()
+        if config.IS_USE_PYSIDE:
+            self.setup_ui()
         # self.show_linklayer_cb.setVisible(False)
         self.show_level_cb.setVisible(False)
         self.plaintext_rn.setChecked(False)
@@ -314,7 +315,7 @@ class MasterWindow(QtWidgets.QMainWindow, MasterWindowUi):
 
         self.tmn_remove_cb = QtWidgets.QPushButton()
         self.tmn_remove_cb.setText('删')
-        self.tmn_remove_cb.setMaximumWidth(25)
+        self.tmn_remove_cb.setMaximumWidth(25)  # xxx
         self.tmn_table.setCellWidget(row_pos, 4, self.tmn_remove_cb)
         self.tmn_remove_cb.clicked.connect(self.tmn_table_remove)
 
