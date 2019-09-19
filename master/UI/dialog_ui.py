@@ -217,29 +217,18 @@ class ApduDiyDialog(QtWidgets.QDialog, ui_setup.ApduDiyDialogUi):
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint if self.always_top_cb.isChecked() else QtCore.Qt.Widget)
 
         self.apdu_text = ''
-        self.service_no = 0xff
         self.send_tm = 0
 
     def send_apdu(self):
         """send apdu"""
-        self.service_no = common.get_apdu_service_no(self.apdu_text)
         config.MASTER_WINDOW.se_apdu_signal.emit(self.apdu_text)
         self.re_msg_box.clear()
         config.MASTER_WINDOW.receive_signal.connect(self.re_msg)
-        self.send_tm = time.time()
 
     def re_msg(self, msg_text):
         """re msg"""
-        if self.service_no != common.get_msg_service_no(msg_text):
-            return
-        if abs(time.time() - self.send_tm) > config.RE_MSG_TIMEOUT:
-            print('re msg timeout!')
-            config.MASTER_WINDOW.receive_signal.disconnect(self.re_msg)
-            self.service_no = 0xff
-            return
         self.re_msg_box.setPlainText(msg_text)
         config.MASTER_WINDOW.receive_signal.disconnect(self.re_msg)
-        self.service_no = 0xff
 
     def trans_se_msg(self):
         """translate"""
@@ -288,6 +277,7 @@ class MsgDiyDialog(QtWidgets.QDialog, ui_setup.MsgDiyDialogUi):
         self.chk_valid_cb.setChecked(True)
         self.show_level_cb.setChecked(True)
 
+        self.se_repair_b.clicked.connect(self.repair_msg)
         self.se_clr_b.clicked.connect(lambda: self.se_msg_box.clear() or self.se_msg_box.setFocus())
         self.re_clr_b.clicked.connect(lambda: self.re_msg_box.clear())
         self.send_b.clicked.connect(self.send_msg)
@@ -311,6 +301,16 @@ class MsgDiyDialog(QtWidgets.QDialog, ui_setup.MsgDiyDialogUi):
         """re msg"""
         self.re_msg_box.setPlainText(msg_text)
         config.MASTER_WINDOW.receive_signal.disconnect(self.re_msg)
+
+    def repair_msg(self):
+        """re msg"""
+        msg_text = self.se_msg_box.toPlainText()
+        if len(msg_text) < 5:
+            return
+        trans = translate.Translate(msg_text)
+        if trans.is_success and trans.is_full_msg:
+            repair_msg = linklayer.repair_cs(msg_text)
+            self.se_msg_box.setPlainText(repair_msg)
 
     def trans_se_msg(self):
         """translate"""

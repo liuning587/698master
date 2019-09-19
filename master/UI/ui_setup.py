@@ -647,6 +647,8 @@ class MsgDiyDialogUi():
 
         self.se_clr_b = QtWidgets.QPushButton()
         self.se_clr_b.setText('清空')
+        self.se_repair_b = QtWidgets.QPushButton()
+        self.se_repair_b.setText('修正报文')
         self.chan_l = QtWidgets.QLabel()
         self.chan_l.setText('通道 ')
         self.chan_cb = QtWidgets.QComboBox()
@@ -655,6 +657,8 @@ class MsgDiyDialogUi():
         self.send_b.setText('发送')
         self.se_btn_hbox = QtWidgets.QHBoxLayout()
         self.se_btn_hbox.addWidget(self.se_clr_b)
+        self.se_btn_hbox.addStretch(1)
+        self.se_btn_hbox.addWidget(self.se_repair_b)
         self.se_btn_hbox.addStretch(1)
         self.se_btn_hbox.addWidget(self.chan_l)
         self.se_btn_hbox.addWidget(self.chan_cb)
