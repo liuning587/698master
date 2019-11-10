@@ -12,6 +12,7 @@ from master.trans import linklayer
 from master.trans.translate import Translate
 from master.UI import dialog_ui
 from master.UI import param_ui
+from master.UI import param_dread_ui
 from master.reply import reply
 from master.datas import k_data_s
 from master.datas import collection
@@ -121,6 +122,7 @@ class MasterWindow(QtWidgets.QMainWindow, MasterWindowUi):
 
         self.about_action.triggered.connect(lambda: config.ABOUT_WINDOW.show() or config.ABOUT_WINDOW.showNormal() or config.ABOUT_WINDOW.activateWindow())
         self.link_action.triggered.connect(self.show_commu_window)
+        self.param_dread_action.triggered.connect(lambda: self.param_dread_dialog.show() or self.param_dread_dialog.showNormal() or self.param_dread_dialog.activateWindow())
         self.general_cmd_action.triggered.connect(lambda: self.general_cmd_dialog.show() or self.general_cmd_dialog.showNormal() or self.general_cmd_dialog.activateWindow())
         self.get_set_service_action.triggered.connect(self.show_get_service_window)
         self.apdu_diy_action.triggered.connect(lambda: self.apdu_diy_dialog.show() or self.apdu_diy_dialog.showNormal() or self.apdu_diy_dialog.activateWindow())
@@ -147,6 +149,8 @@ class MasterWindow(QtWidgets.QMainWindow, MasterWindowUi):
         self.msg_diy_dialog.setStyleSheet(qss_file)
         self.remote_update_dialog = dialog_ui.RemoteUpdateDialog()
         self.remote_update_dialog.setStyleSheet(qss_file)
+        self.param_dread_dialog = param_dread_ui.ParamDreadWindow()
+        self.param_dread_dialog.setStyleSheet(qss_file)
         self.general_cmd_dialog = param_ui.ParamWindow()
         self.general_cmd_dialog.setStyleSheet(qss_file)
 

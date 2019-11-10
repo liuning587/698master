@@ -142,6 +142,8 @@ class MasterWindowUi():
         # self.service_menu.addAction(self.action_service_action)
         # self.service_menu.addAction(self.proxy_service_action)
 
+        self.param_dread_action = QtWidgets.QAction('抄表配置', self)
+        self.param_dread_action.setShortcut('F8')
         self.general_cmd_action = QtWidgets.QAction('常用命令', self)
         self.general_cmd_action.setShortcut('F9')
         self.apdu_diy_action = QtWidgets.QAction('自定义APDU', self)
@@ -151,6 +153,7 @@ class MasterWindowUi():
         self.remote_update_action = QtWidgets.QAction('远程升级', self)
         self.remote_update_action.setShortcut('F12')
         self.msg_menu = self.menubar.addMenu('功能')
+        self.msg_menu.addAction(self.param_dread_action)
         self.msg_menu.addAction(self.general_cmd_action)
         self.msg_menu.addAction(self.apdu_diy_action)
         self.msg_menu.addAction(self.msg_diy_action)
