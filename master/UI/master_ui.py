@@ -360,7 +360,7 @@ class MasterWindow(QtWidgets.QMainWindow, MasterWindowUi):
         row_pos = self.msg_table.rowCount()
         self.msg_table.insertRow(row_pos)
 
-        item = QtWidgets.QTableWidgetItem(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+        item = QtWidgets.QTableWidgetItem(time.strftime("%y-%m-%d %H:%M:%S", time.localtime()))
         # item.setBackground(text_color)
         self.msg_table.setItem(row_pos, 0, item)
 
@@ -680,7 +680,7 @@ class MasterWindow(QtWidgets.QMainWindow, MasterWindowUi):
         """copy_to_clipboard"""
         trans = Translate(self.msg_now)
         text = trans.get_clipboard_text(self.show_level_cb.isChecked(), self.show_dtype_cb.isChecked())
-        clipboard = QtGui.QApplication.clipboard()
+        clipboard = QtWidgets.QApplication.clipboard()
         clipboard.clear()
         clipboard.setText(text)
 
@@ -726,7 +726,7 @@ class MasterWindow(QtWidgets.QMainWindow, MasterWindowUi):
 
 
 if __name__ == '__main__':
-    APP = QtGui.QApplication(sys.argv)
+    APP = QtWidgets.QApplication(sys.argv)
     dialog = MasterWindow()
     dialog.show()
     APP.exec_()
