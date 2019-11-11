@@ -1228,7 +1228,7 @@ class Data698():
             except IndexError:
                 traceback.print_exc()
                 structure_list = []
-        print('structure_list:', structure_list)
+        # print('structure_list:', structure_list) #fixme: 临时屏蔽
         return structure_list
 
     def __get_explain(self, type, oad_omd_text):

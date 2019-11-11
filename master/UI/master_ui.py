@@ -341,7 +341,7 @@ class MasterWindow(QtWidgets.QMainWindow, MasterWindowUi):
         # direction = trans.get_direction()
         client_addr = trans.get_CA()
         if config.IS_FILETER_CA and client_addr != '00' and client_addr != config.COMMU.master_addr:
-            print('过滤报文：CA不匹配')
+            print('过滤报文：CA不匹配', client_addr, config.COMMU.master_addr)
             return
         server_addr = trans.get_SA()
         logic_addr = trans.get_logic_addr()

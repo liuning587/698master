@@ -77,10 +77,103 @@ class MeterCfg():
         return True
 
     def get_cfg_no(self):
-        return '%04X' % (self.cfg_no)
+        return '%X' % (self.cfg_no)
 
     def get_maddr(self):
         return self.maddr
+
+    def get_baudrate(self):
+        if self.baudrate == 0:
+            return '300'
+        elif self.baudrate == 1:
+            return '600'
+        elif self.baudrate == 2:
+            return '1200'
+        elif self.baudrate == 3:
+            return '2400'
+        elif self.baudrate == 4:
+            return '4800'
+        elif self.baudrate == 5:
+            return '7200'
+        elif self.baudrate == 6:
+            return '9600'
+        elif self.baudrate == 7:
+            return '19200'
+        elif self.baudrate == 8:
+            return '38400'
+        elif self.baudrate == 9:
+            return '57600'
+        elif self.baudrate == 10:
+            return '115200'
+        elif self.baudrate == 255:
+            return '自适应(255)'
+        else:
+            return '未知(%d)' % self.baudrate
+
+    def get_port(self):
+        if self.port == 0xF2010201:
+            return '485-1'
+        elif self.port == 0xF2010202:
+            return '485-2'
+        elif self.port == 0xF2010203:
+            return '485-3'
+        elif self.port == 0xF2090201:
+            return 'PLC'
+        else:
+            return '未知(%08X)' % self.port
+
+    def get_ptl(self):
+        if self.ptl == 0:
+            return '未知'
+        elif self.ptl == 1:
+            return '645-1997'
+        elif self.ptl == 2:
+            return '645-2007'
+        elif self.ptl == 3:
+            return '698.45'
+        elif self.ptl == 4:
+            return '188-2004'
+        else:
+            return '无效(%08X)' % self.ptl
+
+    def get_rate(self):
+            return '%d' % self.rate
+
+    def get_pwd(self):
+        return self.pwd
+
+    def get_lineMode(self):
+        if self.lineMode == 0:
+            return '未知'
+        elif self.lineMode == 1:
+            return '单相'
+        elif self.lineMode == 2:
+            return '三相三线'
+        elif self.lineMode == 3:
+            return '三相四线'
+        else:
+            return '无效(%08X)' % self.lineMode
+
+    def get_usrType(self):
+            return '%d' % self.usrType
+
+    def get_stdV(self):
+            return '%d' % (self.stdV // 10) + '.%d' % (self.stdV % 10)
+
+    def get_stdA(self):
+            return '%d' % (self.stdA // 10) + '.%d' % (self.stdA % 10)
+
+    def get_collAddr(self):
+        return self.collAddr
+
+    def get_assetNumber(self):
+        return self.assetNumber
+
+    def get_PT(self):
+            return '%d' % self.PT
+
+    def get_CT(self):
+            return '%d' % self.CT
     
     def encode_to_str(self):
         buf = '0204' # 采集档案配置单元:4个成员

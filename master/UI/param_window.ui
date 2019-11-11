@@ -13,11 +13,6 @@
   <property name="windowTitle">
    <string>参数配置</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>:/698/698.ico</normaloff>
-    <normalon>:/698/698.ico</normalon>:/698/698.ico</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_10">
     <property name="spacing">
@@ -14546,9 +14541,6 @@
  </widget>
  <layoutdefault spacing="6" margin="2"/>
  <layoutfunction spacing="6" margin="2"/>
- <resources>
-  <include location="icon.qrc"/>
- </resources>
  <connections>
   <connection>
    <sender>DT_param_r_b</sender>
