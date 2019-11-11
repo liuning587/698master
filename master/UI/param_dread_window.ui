@@ -137,7 +137,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>通讯地址：</string>
+                  <string>通信地址：</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -308,7 +308,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>通讯端口：</string>
+                  <string>通信端口：</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1376,7 +1376,7 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>1000</width>
+              <width>1150</width>
               <height>0</height>
              </size>
             </property>
@@ -1442,5 +1442,8 @@
  </widget>
  <layoutdefault spacing="6" margin="2"/>
  <layoutfunction spacing="6" margin="2"/>
+ <resources>
+  <include location="icon.qrc"/>
+ </resources>
  <connections/>
 </ui>
