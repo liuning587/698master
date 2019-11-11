@@ -1,5 +1,7 @@
 """param dread ui"""
 import os
+import time
+from master.UI.metercfg import MeterCfg
 from master import config
 from master.trans import common
 from master.UI.param_dread_window import Ui_ParamDreadWindow
@@ -19,6 +21,8 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.setWindowTitle('抄表配置')
         self.setWindowIcon(QtGui.QIcon(os.path.join(config.SOFTWARE_PATH, config.MASTER_ICO_PATH)))
         self.PushButton_get.clicked.connect(self.get_meter_list)
+        self.PushButton_set.clicked.connect(self.set_meter_list)
+        self.PushButton_set.setEnabled(True)
 
     def get_meter_list(self):
         apdu_text = '0501016000020000'
@@ -26,6 +30,7 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         config.MASTER_WINDOW.receive_signal.connect(self.re_get_meter_list)
     
     def re_get_meter_list(self, re_text):
+        config.MASTER_WINDOW.receive_signal.disconnect(self.re_get_meter_list)
         m_data = common.text2list(re_text)
         data = common.get_apdu_list(m_data)
         print('recv: ', data)
@@ -47,4 +52,22 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         # else:
         #     self.res_b.setStyleSheet('color: red')
         #     self.res_b.setText('失败：' + base_data.get_dar(int(data[offset + 1], 16)))
-        config.MASTER_WINDOW.receive_signal.disconnect(self.re_get_meter_list)
+
+    def set_meter_list(self):
+        total = 2000
+        MAX_CNT = 20
+        meter = MeterCfg()
+        no = 0
+
+        while total > 0:
+            cur = total if total < MAX_CNT else MAX_CNT
+            total -= cur
+            apdu_text = '0701016000800001%02X' % cur
+            for _ in range(0, cur):
+                meter.set_cfg_no(no + 2)
+                meter.set_maddr('%012d' % (no + 1))
+                no += 1
+                apdu_text += meter.encode_to_str()
+            apdu_text += '00'
+            config.MASTER_WINDOW.se_apdu_signal.emit(apdu_text)
+            # time.sleep(0.1)

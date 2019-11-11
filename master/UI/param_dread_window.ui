@@ -13,13 +13,8 @@
   <property name="windowTitle">
    <string>抄表配置</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>:/698/698.ico</normaloff>
-    <normalon>:/698/698.ico</normalon>:/698/698.ico</iconset>
-  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_28">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
@@ -32,12 +27,9 @@
        <attribute name="title">
         <string>采集档案</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetFixedSize</enum>
-          </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
           <item>
            <widget class="QGroupBox" name="groupBox_Basic_object">
             <property name="maximumSize">
@@ -113,10 +105,10 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string>2</string>
                  </property>
                  <property name="maxLength">
-                  <number>12</number>
+                  <number>4</number>
                  </property>
                 </widget>
                </item>
@@ -185,7 +177,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string>000000000002</string>
                  </property>
                  <property name="maxLength">
                   <number>12</number>
@@ -326,7 +318,7 @@
                <item>
                 <widget class="QComboBox" name="comboBox_port">
                  <property name="currentIndex">
-                  <number>2</number>
+                  <number>0</number>
                  </property>
                  <item>
                   <property name="text">
@@ -341,6 +333,11 @@
                  <item>
                   <property name="text">
                    <string>PLC</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>交采</string>
                   </property>
                  </item>
                 </widget>
@@ -452,6 +449,9 @@
                  <property name="editable">
                   <bool>true</bool>
                  </property>
+                 <property name="maxCount">
+                  <number>8</number>
+                 </property>
                  <item>
                   <property name="text">
                    <string>4</string>
@@ -524,10 +524,10 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>000000</string>
+                  <string>000000000000</string>
                  </property>
                  <property name="maxLength">
-                  <number>6</number>
+                  <number>12</number>
                  </property>
                 </widget>
                </item>
@@ -570,6 +570,9 @@
                </item>
                <item>
                 <widget class="QComboBox" name="comboBox_lineMode">
+                 <property name="currentIndex">
+                  <number>1</number>
+                 </property>
                  <item>
                   <property name="text">
                    <string>未知(0)</string>
@@ -863,6 +866,12 @@
                    <height>0</height>
                   </size>
                  </property>
+                 <property name="text">
+                  <string>000000000000</string>
+                 </property>
+                 <property name="maxLength">
+                  <number>12</number>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -929,6 +938,12 @@
                    <height>0</height>
                   </size>
                  </property>
+                 <property name="text">
+                  <string>000000000000</string>
+                 </property>
+                 <property name="maxLength">
+                  <number>12</number>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -994,6 +1009,12 @@
                    <width>150</width>
                    <height>0</height>
                   </size>
+                 </property>
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                 <property name="maxLength">
+                  <number>3</number>
                  </property>
                 </widget>
                </item>
@@ -1065,7 +1086,10 @@
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string>1</string>
+                 </property>
+                 <property name="maxLength">
+                  <number>3</number>
                  </property>
                  <property name="frame">
                   <bool>true</bool>
@@ -1106,106 +1130,59 @@
             <property name="title">
              <string/>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout">
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout">
                <item>
-                <widget class="QCheckBox" name="checkBox_batchAdd">
-                 <property name="text">
-                  <string>批量增加</string>
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
                  </property>
-                </widget>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>38</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
                <item>
-                <widget class="QLabel" name="label_batchAdd">
-                 <property name="font">
-                  <font>
-                   <family>SimSun-ExtB</family>
-                   <weight>50</weight>
-                   <bold>false</bold>
-                  </font>
-                 </property>
+                <widget class="QLabel" name="label">
                  <property name="text">
-                  <string>批量增加数量：</string>
+                  <string>数量：</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
                <item>
                 <widget class="QLineEdit" name="lineEdit_batchAdd">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>109</width>
+                   <width>98</width>
                    <height>16777215</height>
                   </size>
                  </property>
+                 <property name="text">
+                  <string>1</string>
+                 </property>
                  <property name="maxLength">
-                  <number>2</number>
+                  <number>4</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="PushButton_batchAdd">
+                 <property name="text">
+                  <string>增加-&gt;</string>
                  </property>
                 </widget>
                </item>
               </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <item>
-                <widget class="QLabel" name="label_delay">
-                 <property name="text">
-                  <string>每包下发延时(ms)：</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_delay"/>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <item>
-                <widget class="QLabel" name="label_cnt">
-                 <property name="text">
-                  <string>    每包下发数量：</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLineEdit" name="lineEdit_cnt"/>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_156">
-               <item>
-                <widget class="QPushButton" name="PushButton_get">
-                 <property name="text">
-                  <string>读取档案</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="PushButton_set">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="text">
-                  <string>设置档案</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_res">
-               <property name="font">
-                <font>
-                 <family>微软雅黑</family>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>操作结果：</string>
-               </property>
-              </widget>
              </item>
             </layout>
            </widget>
@@ -1226,68 +1203,270 @@
          </layout>
         </item>
         <item>
-         <widget class="QTableWidget" name="tableWidget">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>1000</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <column>
-           <property name="text">
-            <string>配置序号</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>波特率</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>通讯端口</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>规约类型</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>费率个数</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>接线方式</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>用户类型</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>额定电流</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>额定电压</string>
-           </property>
-          </column>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QPushButton" name="PushButton_set">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>下发</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PushButton_get">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>读取</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PushButton_stop">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>终止</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PushButton_import">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>导入</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="PushButton_clear">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>清空</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLabel" name="label_cnt">
+                <property name="text">
+                 <string>    每包下发数量：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_cnt">
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>20</string>
+                </property>
+                <property name="maxLength">
+                 <number>3</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <widget class="QLabel" name="label_delay">
+                <property name="text">
+                 <string>每包下发延时(ms)：</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="lineEdit_delay">
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>30000</string>
+                </property>
+                <property name="maxLength">
+                 <number>5</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="progressBar">
+              <property name="minimumSize">
+               <size>
+                <width>300</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="value">
+               <number>24</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>168</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="tableWidget">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>1000</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="accessibleName">
+             <string/>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Sunken</enum>
+            </property>
+            <property name="lineWidth">
+             <number>1</number>
+            </property>
+            <property name="dragEnabled">
+             <bool>false</bool>
+            </property>
+            <property name="gridStyle">
+             <enum>Qt::SolidLine</enum>
+            </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+            <property name="rowCount">
+             <number>0</number>
+            </property>
+            <attribute name="horizontalHeaderCascadingSectionResizes">
+             <bool>false</bool>
+            </attribute>
+            <column>
+             <property name="text">
+              <string>配置序号</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>波特率</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>通讯端口</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>规约类型</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>费率个数</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>接线方式</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>用户类型</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>额定电流</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>额定电压</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -1308,8 +1487,8 @@
  </widget>
  <layoutdefault spacing="6" margin="2"/>
  <layoutfunction spacing="6" margin="2"/>
- <resources>
+ <!-- <resources>
   <include location="icon.qrc"/>
- </resources>
+ </resources> -->
  <connections/>
 </ui>

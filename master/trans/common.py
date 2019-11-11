@@ -38,11 +38,6 @@ def is_bit(value:'int > 0', bit:'int > 0'):
     """chk bit """
     return True if (value >> bit) & 1 else False
 
-def is_bit(value:'int > 0', bit:'int > 0'):
-    """chk bit """
-    return True if (value >> bit) & 1 else False
-
-
 def chk_format(m_list):
     """chk format"""
     if m_list[0] not in ['68', '98'] or m_list[len(m_list) - 1] != '16':
