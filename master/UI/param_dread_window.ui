@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>1395</width>
-    <height>733</height>
+    <height>784</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>参数配置</string>
+   <string>抄表配置</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -28,18 +28,18 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="tab_6">
+      <widget class="QWidget" name="tab_meter">
        <attribute name="title">
         <string>采集档案</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_26">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
           <property name="sizeConstraint">
-           <enum>QLayout::SetMinimumSize</enum>
+           <enum>QLayout::SetFixedSize</enum>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox_10">
+           <widget class="QGroupBox" name="groupBox_Basic_object">
             <property name="maximumSize">
              <size>
               <width>300</width>
@@ -53,7 +53,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_155">
                <item>
-                <widget class="QLabel" name="label_156">
+                <widget class="QLabel" name="label_cfg_no">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -81,7 +81,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_no_box_7">
+                <widget class="QLineEdit" name="lineEdit_cfg_no">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -125,7 +125,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_3">
                <item>
-                <widget class="QLabel" name="label_146">
+                <widget class="QLabel" name="label_maddr">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -153,7 +153,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_no_box_2">
+                <widget class="QLineEdit" name="lineEdit_maddr">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -197,7 +197,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_67">
                <item>
-                <widget class="QLabel" name="label_147">
+                <widget class="QLabel" name="label_baudrate">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -225,7 +225,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_7">
+                <widget class="QComboBox" name="comboBox_baudrate">
                  <property name="currentIndex">
                   <number>3</number>
                  </property>
@@ -296,7 +296,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_69">
                <item>
-                <widget class="QLabel" name="label_149">
+                <widget class="QLabel" name="label_port">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -324,7 +324,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_2">
+                <widget class="QComboBox" name="comboBox_port">
                  <property name="currentIndex">
                   <number>2</number>
                  </property>
@@ -350,7 +350,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_68">
                <item>
-                <widget class="QLabel" name="label_148">
+                <widget class="QLabel" name="label_ptl">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -378,7 +378,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox">
+                <widget class="QComboBox" name="comboBox_ptl">
                  <property name="currentIndex">
                   <number>2</number>
                  </property>
@@ -414,7 +414,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_75">
                <item>
-                <widget class="QLabel" name="label_151">
+                <widget class="QLabel" name="label_rate">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -448,7 +448,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_6">
+                <widget class="QComboBox" name="comboBox_rate">
                  <property name="editable">
                   <bool>true</bool>
                  </property>
@@ -464,7 +464,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_70">
                <item>
-                <widget class="QLabel" name="label_150">
+                <widget class="QLabel" name="label_pwd">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -492,7 +492,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_dialog_remain_box_2">
+                <widget class="QLineEdit" name="comboBox_pwd">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -536,7 +536,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_74">
                <item>
-                <widget class="QLabel" name="label_153">
+                <widget class="QLabel" name="label_lineMode">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -569,20 +569,25 @@
                 </widget>
                </item>
                <item>
-                <widget class="QComboBox" name="comboBox_5">
+                <widget class="QComboBox" name="comboBox_lineMode">
                  <item>
                   <property name="text">
-                   <string>三相四线</string>
+                   <string>未知(0)</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>三相三线</string>
+                   <string>单相(1)</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>单相</string>
+                   <string>三相三线(2)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>三相四线(3)</string>
                   </property>
                  </item>
                 </widget>
@@ -592,7 +597,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_71">
                <item>
-                <widget class="QLabel" name="label_152">
+                <widget class="QLabel" name="label_usrType">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -620,31 +625,60 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_rpt_ctr_box_2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+                <widget class="QComboBox" name="comboBox_usrType">
+                 <property name="editable">
+                  <bool>true</bool>
                  </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="sizeIncrement">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="baseSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
+                 <item>
+                  <property name="text">
+                   <string>0</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>4</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>5</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>6</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>7</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>8</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>9</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
               </layout>
@@ -652,7 +686,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_73">
                <item>
-                <widget class="QLabel" name="label_155">
+                <widget class="QLabel" name="label_stdA">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -677,7 +711,7 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>额定电流：</string>
+                  <string>额定电流(A)：</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -685,37 +719,20 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_host_ver_box_2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+                <widget class="QComboBox" name="comboBox_stdA">
+                 <property name="editable">
+                  <bool>true</bool>
                  </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="sizeIncrement">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="baseSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
+                 <item>
+                  <property name="text">
+                   <string>1.5</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>5</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
               </layout>
@@ -723,7 +740,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_72">
                <item>
-                <widget class="QLabel" name="label_154">
+                <widget class="QLabel" name="label_stdV">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -743,7 +760,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>额定电压：</string>
+                  <string>额定电压(V)：</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -751,37 +768,20 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_terminal_ver_box_2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+                <widget class="QComboBox" name="comboBox_stdV">
+                 <property name="editable">
+                  <bool>true</bool>
                  </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="sizeIncrement">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="baseSize">
-                  <size>
-                   <width>150</width>
-                   <height>0</height>
-                  </size>
-                 </property>
+                 <item>
+                  <property name="text">
+                   <string>220</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>100</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
               </layout>
@@ -790,7 +790,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_11">
+           <widget class="QGroupBox" name="groupBox_Extended_object">
             <property name="maximumSize">
              <size>
               <width>300</width>
@@ -804,7 +804,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_152">
                <item>
-                <widget class="QLabel" name="label_158">
+                <widget class="QLabel" name="label_assetNumber">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -832,7 +832,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_ver_box_3">
+                <widget class="QLineEdit" name="lineEdit_assetNumber">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -870,7 +870,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_151">
                <item>
-                <widget class="QLabel" name="label_157">
+                <widget class="QLabel" name="label_collAddr">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -898,7 +898,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_no_box_3">
+                <widget class="QLineEdit" name="lineEdit_collAddr">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -936,7 +936,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_154">
                <item>
-                <widget class="QLabel" name="label_160">
+                <widget class="QLabel" name="label_PT">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -964,7 +964,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_dialog_tm_box_3">
+                <widget class="QLineEdit" name="lineEdit_PT">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1002,7 +1002,7 @@
              <item>
               <layout class="QHBoxLayout" name="horizontalLayout_153">
                <item>
-                <widget class="QLabel" name="label_159">
+                <widget class="QLabel" name="label_CT">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                    <horstretch>0</horstretch>
@@ -1030,7 +1030,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="esam_key_box_3">
+                <widget class="QLineEdit" name="lineEdit_CT">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -1090,7 +1090,13 @@
            </widget>
           </item>
           <item>
-           <widget class="QGroupBox" name="groupBox_23">
+           <widget class="QGroupBox" name="groupBox_param">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>300</width>
@@ -1100,82 +1106,106 @@
             <property name="title">
              <string/>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_158">
+            <layout class="QVBoxLayout" name="verticalLayout">
              <item>
-              <layout class="QVBoxLayout" name="verticalLayout_24">
+              <layout class="QHBoxLayout" name="horizontalLayout">
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_157">
-                 <item>
-                  <widget class="QCheckBox" name="checkBox">
-                   <property name="text">
-                    <string>批量增加</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_161">
-                   <property name="font">
-                    <font>
-                     <family>SimSun-ExtB</family>
-                     <weight>50</weight>
-                     <bold>false</bold>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>批量增加数量：</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLineEdit" name="lineEdit_2">
-                   <property name="maximumSize">
-                    <size>
-                     <width>109</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="maxLength">
-                    <number>2</number>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QCheckBox" name="checkBox_batchAdd">
+                 <property name="text">
+                  <string>批量增加</string>
+                 </property>
+                </widget>
                </item>
                <item>
-                <layout class="QHBoxLayout" name="horizontalLayout_156">
-                 <item>
-                  <widget class="QPushButton" name="esam_r_info_b_2">
-                   <property name="text">
-                    <string>读取档案</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QPushButton" name="esam_r_ctr_b_3">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>设置档案</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </item>
-               <item>
-                <widget class="QLabel" name="label">
+                <widget class="QLabel" name="label_batchAdd">
                  <property name="font">
                   <font>
-                   <family>微软雅黑</family>
-                   <pointsize>10</pointsize>
+                   <family>SimSun-ExtB</family>
+                   <weight>50</weight>
+                   <bold>false</bold>
                   </font>
                  </property>
                  <property name="text">
-                  <string>操作结果：</string>
+                  <string>批量增加数量：</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_batchAdd">
+                 <property name="maximumSize">
+                  <size>
+                   <width>109</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="maxLength">
+                  <number>2</number>
                  </property>
                 </widget>
                </item>
               </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <item>
+                <widget class="QLabel" name="label_delay">
+                 <property name="text">
+                  <string>每包下发延时(ms)：</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_delay"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QLabel" name="label_cnt">
+                 <property name="text">
+                  <string>    每包下发数量：</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_cnt"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_156">
+               <item>
+                <widget class="QPushButton" name="PushButton_get">
+                 <property name="text">
+                  <string>读取档案</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="PushButton_set">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="text">
+                  <string>设置档案</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_res">
+               <property name="font">
+                <font>
+                 <family>微软雅黑</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>操作结果：</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -1197,6 +1227,9 @@
         </item>
         <item>
          <widget class="QTableWidget" name="tableWidget">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>1000</width>
@@ -1258,12 +1291,12 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="tab_scheme">
        <attribute name="title">
         <string>方案</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="tab_task">
        <attribute name="title">
         <string>任务</string>
        </attribute>

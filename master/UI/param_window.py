@@ -62,7 +62,7 @@ class Ui_ParamWindow(object):
         self.DT_box.setSizeIncrement(QtCore.QSize(0, 100))
         self.DT_box.setBaseSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
-        font.setPointSize(28)
+        font.setPointSize(15)
         self.DT_box.setFont(font)
         self.DT_box.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.DT_box.setAutoFillBackground(False)

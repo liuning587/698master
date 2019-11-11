@@ -81,7 +81,7 @@ class QuickSetTime(QtWidgets.QWidget):
         self.dt_box = QtWidgets.QDateTimeEdit()
         font = QtGui.QFont()
         font.setPointSize(15)
-        self.dt_box.setFont(font)
+        # self.dt_box.setFont(font) #fixme: 字体太大了
         self.dt_box.setAlignment(QtCore.Qt.AlignCenter)
 
         dt_sec_hbox = QtWidgets.QHBoxLayout()
