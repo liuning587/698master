@@ -23,6 +23,7 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.PushButton_get.clicked.connect(self.get_meter_list)
         self.PushButton_set.clicked.connect(self.set_meter_list)
         self.PushButton_batchAdd.clicked.connect(self.get_metercfg_from_ui_and_set_to_table_widget)
+
         #tableWidget
         items = ['序号', '通信地址', '波特率', '端口', '规约类型', '费率', '通信密码', '接线方式', '用户类型', '额定电压', '额定电流', '资产号', '采集器地址', 'PT', 'CT']
         for count in range(len(items)):
@@ -43,6 +44,8 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.tableWidget.setColumnWidth(12, 110) #采集器地址
         self.tableWidget.setColumnWidth(13, 40)  #PT
         self.tableWidget.setColumnWidth(14, 40)  #CT
+
+        self.tableWidget.cellClicked.connect(self.get_metercfg_from_tableWidget)
 
         # self.add_meter_to_tableWidget()
         # mcfg = MeterCfg()
@@ -72,8 +75,126 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
 
         pass
 
-    def get_meter_from_tableWidget(self, index = -1):
+    def get_metercfg_from_tableWidget(self, row = -1):
         mcfg = MeterCfg()
+
+        #cfg_no
+        if self.tableWidget.item(row, 0) is not None:
+            mcfg.set_cfg_no(int(self.tableWidget.item(row, 0).text()))
+        
+        #maddr
+        if self.tableWidget.item(row, 1) is not None:
+            mcfg.set_maddr(self.tableWidget.item(row, 1).text())
+
+        #baudrate
+        if self.tableWidget.item(row, 2) is not None:
+            if '300' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(0)
+            elif '1200' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(2)
+            elif '2400' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(3)
+            elif '4800' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(4)
+            elif '7200' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(5)
+            elif '9600' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(6)
+            elif '19200' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(7)
+            elif '38400' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(8)
+            elif '57600' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(9)
+            elif '115200' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(10)
+            elif '600' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(1)
+            elif '自' in self.tableWidget.item(row, 2).text():
+                mcfg.set_baudrate(255)
+            else:
+                mcfg.set_baudrate(3)
+            
+        #port
+        if self.tableWidget.item(row, 3) is not None:
+            if  "485-1" in self.tableWidget.item(row, 3).text():
+                mcfg.set_port(0xF2010201)
+            elif  "485-2" in self.tableWidget.item(row, 3).text():
+                mcfg.set_port(0xF2010202)
+            elif  "485-3" in self.tableWidget.item(row, 3).text():
+                mcfg.set_port(0xF2010203)
+            elif  "PLC" in self.tableWidget.item(row, 3).text():
+                mcfg.set_port(0xF2090201)
+            elif  "交采" in self.tableWidget.item(row, 3).text():
+                mcfg.set_port(0xF2080201)
+            else:
+                mcfg.set_port(0xF2090201)
+
+        #ptl
+        if self.tableWidget.item(row, 4) is not None:
+            if  "未知" in self.tableWidget.item(row, 4).text():
+                mcfg.set_ptl(0)
+            elif  "97" in self.tableWidget.item(row, 4).text():
+                mcfg.set_ptl(1)
+            elif  "07" in self.tableWidget.item(row, 4).text():
+                mcfg.set_ptl(2)
+            elif  "698" in self.tableWidget.item(row, 4).text():
+                mcfg.set_ptl(3)
+            elif  "188" in self.tableWidget.item(row, 4).text():
+                mcfg.set_ptl(4)
+            else:
+                mcfg.set_ptl(2)
+
+        #rate
+        if self.tableWidget.item(row, 5) is not None:
+            mcfg.set_rate(int(self.tableWidget.item(row, 5).text()))
+
+        #pwd
+        if self.tableWidget.item(row, 6) is not None:
+            mcfg.set_pwd(self.tableWidget.item(row, 6).text())
+
+        #lineMode
+        if self.tableWidget.item(row, 7) is not None:
+            if "未知" in self.tableWidget.item(row, 7).text():
+                mcfg.set_lineMode(0)
+            elif "单相" in self.tableWidget.item(row, 7).text():
+                mcfg.set_lineMode(1)
+            elif "三相三线" in self.tableWidget.item(row, 7).text():
+                mcfg.set_lineMode(2)
+            elif "三相四线" in self.tableWidget.item(row, 7).text():
+                mcfg.set_lineMode(3)
+            else:
+                mcfg.set_lineMode(1)
+        
+        #usrType
+        if self.tableWidget.item(row, 8) is not None:
+            mcfg.set_usrType(int(self.tableWidget.item(row, 8).text()))
+
+        #stdV
+        if self.tableWidget.item(row, 9) is not None:
+            mcfg.set_stdV(int(float(self.tableWidget.item(row, 9).text())*10 + 0.5))
+
+        #stdA
+        if self.tableWidget.item(row, 10) is not None:
+            mcfg.set_stdA(int(float(self.tableWidget.item(row, 10).text())*10 + 0.5))
+
+        #set_assetNumber
+        if self.tableWidget.item(row, 11) is not None:
+            mcfg.set_assetNumber(self.tableWidget.item(row, 11).text())
+
+        #set_collAddr
+        if self.tableWidget.item(row, 12) is not None:
+            mcfg.set_collAddr(self.tableWidget.item(row, 12).text())
+
+        #PT
+        if self.tableWidget.item(row, 13) is not None:
+            mcfg.set_PT(int(self.tableWidget.item(row, 13).text()))
+
+        #CT
+        if self.tableWidget.item(row, 14) is not None:
+            mcfg.set_CT(int(self.tableWidget.item(row, 14).text()))
+
+        self.set_metercfg_to_ui(mcfg)
         return mcfg
 
     def set_metercfg_to_ui(self, mcfg = MeterCfg()):

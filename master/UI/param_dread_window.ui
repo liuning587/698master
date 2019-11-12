@@ -322,22 +322,32 @@
                  </property>
                  <item>
                   <property name="text">
-                   <string>485-1</string>
+                   <string>485-1(F2010201)</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>485-2</string>
+                   <string>485-2(F2010202)</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>PLC</string>
+                   <string>485-3(F2010203)</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>交采</string>
+                   <string>PLC(F2090201)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>交采(F2080201)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>无效</string>
                   </property>
                  </item>
                 </widget>
@@ -687,6 +697,55 @@
               </layout>
              </item>
              <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_72">
+               <item>
+                <widget class="QLabel" name="label_stdV">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>110</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>110</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>额定电压(V)：</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox_stdV">
+                 <property name="editable">
+                  <bool>true</bool>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>220</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>100</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_73">
                <item>
                 <widget class="QLabel" name="label_stdA">
@@ -734,55 +793,6 @@
                  <item>
                   <property name="text">
                    <string>5</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_72">
-               <item>
-                <widget class="QLabel" name="label_stdV">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>110</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>110</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>额定电压(V)：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="comboBox_stdV">
-                 <property name="editable">
-                  <bool>true</bool>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>220</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>100</string>
                   </property>
                  </item>
                 </widget>
