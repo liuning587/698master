@@ -1,6 +1,7 @@
 """param dread ui"""
 import os
 import time
+import threading
 from master.UI.metercfg import MeterCfg
 from master import config
 from master.trans import common
@@ -14,6 +15,7 @@ else:
 
 
 class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
+    send_signal = QtCore.Signal(int, int) if config.IS_USE_PYSIDE else QtCore.pyqtSignal(int, int)
     def __init__(self):
         super(ParamDreadWindow, self).__init__()
         self.setupUi(self)
@@ -24,6 +26,8 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.PushButton_set.clicked.connect(self.set_meter_from_tableWidget)
         self.PushButton_batchAdd.clicked.connect(self.get_metercfg_from_ui_and_set_to_table_widget)
         self.PushButton_clear.clicked.connect(self.clear_tableWidget)
+        self.send_signal.connect(self.send_proc)
+        self.progressBar.setEnabled(False)
 
         #tableWidget
         items = ['序号', '通信地址', '波特率', '端口', '规约类型', '费率', '通信密码', '接线方式', '用户类型', '额定电压', '额定电流', '资产号', '采集器地址', 'PT', 'CT']
@@ -350,21 +354,14 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         #     self.res_b.setStyleSheet('color: red')
         #     self.res_b.setText('失败：' + base_data.get_dar(int(data[offset + 1], 16)))
 
-    def set_meter_list(self, metercfg_list: [MeterCfg]):
-        cnt = len(metercfg_list)
-        if cnt <= 0:
-            return
-    
-        apdu_text = '0701016000800001%02X' % cnt
-        for i in range(cnt):
-            apdu_text += metercfg_list[i].encode_to_str()
-        apdu_text += '00'
-        config.MASTER_WINDOW.se_apdu_signal.emit(apdu_text)
-        pass
-    
     def set_meter_thread(self, metercfg_list: [MeterCfg], max_cnt = 20, delay = 0.1):
         total = len(metercfg_list)
+        if total <= 0:
+            return
         no = 0
+
+        packet_cur = 1
+        packet_cnt = (total + max_cnt - 1) // max_cnt
 
         while total > 0:
             cur = total if total < max_cnt else max_cnt
@@ -374,24 +371,37 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
                 apdu_text += metercfg_list[no + i].encode_to_str()
             apdu_text += '00'
             config.MASTER_WINDOW.se_apdu_signal.emit(apdu_text)
+            self.send_signal.emit(packet_cur, packet_cnt)
+            packet_cur += 1
             if total > 0:
                 time.sleep(delay)
             no += cur
         pass
     
+    def send_proc(self, cur, total):
+        """send proc"""
+        if cur == total:
+            self.label_status.setText('发送完成')
+        else:
+            self.label_status.setText('发送中({no}/{all})'.format(no=cur, all=total))
+        if total > 0:
+            self.progressBar.setEnabled(True)
+            self.progressBar.setValue((cur * 100) / total)
+        else:
+            self.progressBar.setEnabled(False)
+    
     def set_meter_from_tableWidget(self):
         ''' 搜索当前已选中的行, 生成MeterCfg列表 '''
-        
+
         row_nums = []
         for row in self.tableWidget.selectionModel().selection().indexes():
             row_nums.append(row.row())
         row_nums = list(set(row_nums)) #去重
     
-        print('待下发行:', row_nums)
-
         total = len(row_nums)
         if total <= 0:
             return
+
         max_cnt = int(self.lineEdit_cnt.text())
         if max_cnt <= 0 or max_cnt > 50:
             max_cnt = 1
@@ -401,25 +411,14 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         else:
             delay = float(self.lineEdit_delay.text()) / 1000 #ms
 
-        no = 0
-        while total > 0:
-            cur = total if total < max_cnt else max_cnt
-            total -= cur
+        metercfg_list = []
+        for i in range(total):
+            metercfg_list.append(self.get_metercfg_from_tableWidget(row_nums[i]))
 
-            metercfg_list = []
-            for i in range(cur):
-                metercfg_list.append(self.get_metercfg_from_tableWidget(row_nums[no + i]))
-                for col in range(self.tableWidget.columnCount()):
-                    self.tableWidget.item(row_nums[no + i], col).setBackground(QtCore.Qt.magenta)
+        threading.Thread(target=self.set_meter_thread,\
+            args=(metercfg_list, max_cnt, delay)).start()
 
-            self.set_meter_list(metercfg_list)
-            for i in range(cur):
-                for col in range(self.tableWidget.columnCount()):
-                    self.tableWidget.item(row_nums[no + i], col).setBackground(QtCore.Qt.green)
-            if total > 0:
-                time.sleep(delay)
-            no += cur
-        pass
+        return
 
     def set_meter_list_test(self): #todo: 最好新开线程处理, 否则影响界面
         ''' just for test '''
