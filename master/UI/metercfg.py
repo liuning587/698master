@@ -4,19 +4,19 @@ import sys
 
 class MeterCfg():
     def __init__(self):
-        self.cfg_no = 1
-        self.maddr = '000000000001'
+        self.cfg_no = 2
+        self.maddr = '000000000002'
         self.baudrate = 3
         self.ptl = 3
         self.port = 0xF2090201
-        self.pwd = '000000000000'
+        self.pwd = ''
         self.rate = 4
         self.usrType = 0
         self.lineMode = 3
         self.stdV = 2200
         self.stdA = 15
-        self.collAddr = '000000000000'
-        self.assetNumber = '000000000000'
+        self.collAddr = ''
+        self.assetNumber = ''
         self.PT = 1
         self.CT = 1
 

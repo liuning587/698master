@@ -21,8 +21,9 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.setWindowTitle('抄表配置')
         self.setWindowIcon(QtGui.QIcon(os.path.join(config.SOFTWARE_PATH, config.MASTER_ICO_PATH)))
         self.PushButton_get.clicked.connect(self.get_meter_list)
-        self.PushButton_set.clicked.connect(self.set_meter_list)
+        self.PushButton_set.clicked.connect(self.set_meter_from_tableWidget)
         self.PushButton_batchAdd.clicked.connect(self.get_metercfg_from_ui_and_set_to_table_widget)
+        self.PushButton_clear.clicked.connect(self.clear_tableWidget)
 
         #tableWidget
         items = ['序号', '通信地址', '波特率', '端口', '规约类型', '费率', '通信密码', '接线方式', '用户类型', '额定电压', '额定电流', '资产号', '采集器地址', 'PT', 'CT']
@@ -45,12 +46,13 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.tableWidget.setColumnWidth(13, 40)  #PT
         self.tableWidget.setColumnWidth(14, 40)  #CT
 
+        self.tableWidget.cellChanged.connect(self.solt_changed)
         self.tableWidget.cellClicked.connect(self.get_metercfg_from_tableWidget)
+        self.tableWidget.currentCellChanged.connect(self.get_metercfg_from_tableWidget)
+        self.tableWidget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)  ######允许右键产生子菜单
+        self.tableWidget.customContextMenuRequested.connect(self.generate_tableWidgetMenu)  ####右键菜单
 
-        # self.add_meter_to_tableWidget()
-        # mcfg = MeterCfg()
-        # mcfg.set_maddr("%012d"%5)
-        # self.set_metercfg_to_ui(mcfg)
+        self.set_metercfg_to_ui()
 
     def add_meter_to_tableWidget(self, mcfg = MeterCfg(), row_pos = -1):
         if row_pos == -1:
@@ -73,6 +75,14 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.tableWidget.setItem(row_pos, 13,  QtWidgets.QTableWidgetItem(mcfg.get_PT()))
         self.tableWidget.setItem(row_pos, 14,  QtWidgets.QTableWidgetItem(mcfg.get_CT()))
 
+        self.tableWidget.selectRow(row_pos) #最好不要影响之前已经选择的行
+        
+        for col in range(self.tableWidget.columnCount()):
+            self.tableWidget.item(row_pos, col).setBackground(QtCore.Qt.yellow)
+
+    def solt_changed(self, row = -1, column = -1):
+        # if row >= 0 and self.tableWidget.item(row, column) is not None:
+        #     self.tableWidget.item(row, column).setBackground(QtCore.Qt.yellow)
         pass
 
     def get_metercfg_from_tableWidget(self, row = -1):
@@ -285,7 +295,31 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
             mcfg.set_maddr("%012d" % (int(mcfg.get_maddr()) + 1))
         
         self.set_metercfg_to_ui(mcfg)
-        pass
+
+    def clear_tableWidget(self):
+        self.tableWidget.setRowCount(0)
+
+    def generate_tableWidgetMenu(self, pos):
+        menu = QtWidgets.QMenu()
+        item1 = menu.addAction("下发")
+        item2 = menu.addAction("删除")
+        action = menu.exec_(self.tableWidget.mapToGlobal(pos))
+
+        row_nums = []
+        for row in self.tableWidget.selectionModel().selection().indexes():
+            row_nums.append(row.row())
+        row_nums = list(set(row_nums)) #去重
+
+        if action == item1:
+            self.set_meter_from_tableWidget()
+            pass
+
+        elif action == item2:
+            row_nums.sort(reverse=True) #删除需要降序
+            for r in row_nums:
+                self.tableWidget.removeRow(r)
+        else:
+            return
 
     def get_meter_list(self):
         apdu_text = '0501016000020000'
@@ -316,7 +350,79 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         #     self.res_b.setStyleSheet('color: red')
         #     self.res_b.setText('失败：' + base_data.get_dar(int(data[offset + 1], 16)))
 
-    def set_meter_list(self):
+    def set_meter_list(self, metercfg_list: [MeterCfg]):
+        cnt = len(metercfg_list)
+        if cnt <= 0:
+            return
+    
+        apdu_text = '0701016000800001%02X' % cnt
+        for i in range(cnt):
+            apdu_text += metercfg_list[i].encode_to_str()
+        apdu_text += '00'
+        config.MASTER_WINDOW.se_apdu_signal.emit(apdu_text)
+        pass
+    
+    def set_meter_thread(self, metercfg_list: [MeterCfg], max_cnt = 20, delay = 0.1):
+        total = len(metercfg_list)
+        no = 0
+
+        while total > 0:
+            cur = total if total < max_cnt else max_cnt
+            total -= cur
+            apdu_text = '0701016000800001%02X' % cur
+            for i in range(cur):
+                apdu_text += metercfg_list[no + i].encode_to_str()
+            apdu_text += '00'
+            config.MASTER_WINDOW.se_apdu_signal.emit(apdu_text)
+            if total > 0:
+                time.sleep(delay)
+            no += cur
+        pass
+    
+    def set_meter_from_tableWidget(self):
+        ''' 搜索当前已选中的行, 生成MeterCfg列表 '''
+        
+        row_nums = []
+        for row in self.tableWidget.selectionModel().selection().indexes():
+            row_nums.append(row.row())
+        row_nums = list(set(row_nums)) #去重
+    
+        print('待下发行:', row_nums)
+
+        total = len(row_nums)
+        if total <= 0:
+            return
+        max_cnt = int(self.lineEdit_cnt.text())
+        if max_cnt <= 0 or max_cnt > 50:
+            max_cnt = 1
+
+        if int(self.lineEdit_delay.text()) == 0:
+            delay = 0.1
+        else:
+            delay = float(self.lineEdit_delay.text()) / 1000 #ms
+
+        no = 0
+        while total > 0:
+            cur = total if total < max_cnt else max_cnt
+            total -= cur
+
+            metercfg_list = []
+            for i in range(cur):
+                metercfg_list.append(self.get_metercfg_from_tableWidget(row_nums[no + i]))
+                for col in range(self.tableWidget.columnCount()):
+                    self.tableWidget.item(row_nums[no + i], col).setBackground(QtCore.Qt.magenta)
+
+            self.set_meter_list(metercfg_list)
+            for i in range(cur):
+                for col in range(self.tableWidget.columnCount()):
+                    self.tableWidget.item(row_nums[no + i], col).setBackground(QtCore.Qt.green)
+            if total > 0:
+                time.sleep(delay)
+            no += cur
+        pass
+
+    def set_meter_list_test(self): #todo: 最好新开线程处理, 否则影响界面
+        ''' just for test '''
         total = 2000
         MAX_CNT = 20
         meter = MeterCfg()
