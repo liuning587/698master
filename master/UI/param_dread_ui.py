@@ -29,6 +29,14 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.send_signal.connect(self.send_proc)
         self.progressBar.setEnabled(False)
 
+        self.lineEdit_cfg_no.setInputMask('0000')
+        self.lineEdit_maddr.setInputMask('999999999999')
+        self.lineEdit_pwd.setInputMask('999999999999')
+        self.lineEdit_assetNumber.setInputMask('999999999999')
+        self.lineEdit_collAddr.setInputMask('999999999999')
+        self.lineEdit_batchAdd.setInputMask('0000')
+        self.lineEdit_delay.setInputMask('00000')
+
         #tableWidget
         items = ['序号', '通信地址', '波特率', '端口', '规约类型', '费率', '通信密码', '接线方式', '用户类型', '额定电压', '额定电流', '资产号', '采集器地址', 'PT', 'CT']
         for count in range(len(items)):
@@ -265,7 +273,8 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         mcfg.set_ptl(ptl if ptl < 5 else 0)
 
         mcfg.set_rate(int(self.comboBox_rate.currentText()))
-        mcfg.set_pwd(self.lineEdit_pwd.text())
+        if len(self.lineEdit_pwd.text()) > 0:
+            mcfg.set_pwd("%012d" % int(self.lineEdit_pwd.text()))
 
         if "未知" in self.comboBox_lineMode.currentText():
             mcfg.set_lineMode(0)
@@ -282,8 +291,10 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         mcfg.set_stdA(int(float(self.comboBox_stdA.currentText())*10 + 0.5))
         mcfg.set_stdV(int(float(self.comboBox_stdV.currentText())*10 + 0.5))
 
-        mcfg.set_assetNumber(self.lineEdit_assetNumber.text())
-        mcfg.set_collAddr(self.lineEdit_collAddr.text())
+        if len(self.lineEdit_assetNumber.text()) > 0:
+            mcfg.set_assetNumber("%012d" % int(self.lineEdit_assetNumber.text()))
+        if len(self.lineEdit_collAddr.text()) > 0:
+            mcfg.set_collAddr("%012d" % int(self.lineEdit_collAddr.text()))
         mcfg.set_PT(int(self.lineEdit_PT.text()))
         mcfg.set_CT(int(self.lineEdit_CT.text()))
 
