@@ -24,60 +24,64 @@ class MeterCfg():
         self.cfg_no = cfg_no
         return True
 
-    def set_maddr(self, maddr):
+    def set_maddr(self, maddr = '000000000001'):
         self.maddr = maddr #todo: list to str
         return True
 
-    def set_baudrate(self, baudrate):
+    def set_baudrate(self, baudrate = 3):
         self.baudrate = baudrate# todo: real baudrate
         return True
 
-    def set_ptl(self, ptl):
+    def set_ptl(self, ptl = 2):
         self.ptl = ptl # todo: real ptl
         return True
 
-    def set_port(self, port):
+    def set_port(self, port = 0xF2090201):
         self.port = port #todo: real port oad code
         return True
 
-    def set_pwd(self, pwd):
+    def set_pwd(self, pwd = ''):
         self.pwd = pwd #todo: list to str
         return True
 
-    def set_rate(self, rate):
+    def set_rate(self, rate = 4):
         self.rate = rate
         return True
 
-    def set_usrType(self, usrType):
+    def set_usrType(self, usrType = 0):
         self.usrType = usrType
         return True
 
-    def set_lineMode(self, lineMode):
+    def set_lineMode(self, lineMode = 1):
         self.lineMode = lineMode
         return True
 
-    def set_stdV(self, stdV):
+    def set_stdV(self, stdV = 2200):
         self.stdV = stdV
         return True
 
-    def set_stdA(self, stdA):
+    def set_stdA(self, stdA = 15):
         self.stdA = stdA
         return True
 
-    def set_collAddr(self, collAddr):
+    def set_assetNumber(self, assetNumber = ''):
+        self.assetNumber = assetNumber
+        return True
+
+    def set_collAddr(self, collAddr = ''):
         self.collAddr = collAddr #todo: list to str
         return True
 
-    def set_PT(self, PT):
+    def set_PT(self, PT = 1):
         self.PT = PT
         return True
     
-    def set_CT(self, CT):
-        self.set_CT
+    def set_CT(self, CT = 1):
+        self.CT = CT
         return True
 
     def get_cfg_no(self):
-        return '%X' % (self.cfg_no)
+        return '%d' % (self.cfg_no)
 
     def get_maddr(self):
         return self.maddr
@@ -175,6 +179,24 @@ class MeterCfg():
     def get_CT(self):
             return '%d' % self.CT
     
+    def get_str_list(self):
+        return [
+            self.get_cfg_no(),
+            self.get_maddr(),
+            self.get_baudrate(),
+            self.get_port(),
+            self.get_ptl(),
+            self.get_rate(),
+            self.get_pwd(),
+            self.get_lineMode(),
+            self.get_usrType(),
+            self.get_stdV(),
+            self.get_stdA(),
+            self.get_assetNumber(),
+            self.get_collAddr(),
+            self.get_PT(),
+        ]
+        
     def encode_to_str(self):
         buf = '0204' # 采集档案配置单元:4个成员
         buf += '12%04X' % self.cfg_no # 配置序号

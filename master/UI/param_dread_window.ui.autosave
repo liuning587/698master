@@ -322,22 +322,32 @@
                  </property>
                  <item>
                   <property name="text">
-                   <string>485-1</string>
+                   <string>485-1(F2010201)</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>485-2</string>
+                   <string>485-2(F2010202)</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>PLC</string>
+                   <string>485-3(F2010203)</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>交采</string>
+                   <string>PLC(F2090201)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>交采(F2080201)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>无效</string>
                   </property>
                  </item>
                 </widget>
