@@ -2,6 +2,7 @@
 import os
 import time
 import threading
+import csv
 from master.UI.metercfg import MeterCfg
 from master import config
 from master.trans import translate
@@ -33,6 +34,7 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.PushButton_set.clicked.connect(self.set_meter_from_tableWidget_by_color)
         self.PushButton_batchAdd.clicked.connect(self.get_metercfg_from_ui_and_set_to_table_widget)
         self.PushButton_clear.clicked.connect(self.clear_tableWidget)
+        self.PushButton_export.clicked.connect(self.export_meter_list)
         self.send_signal.connect(self.send_proc)
         self.row_status_sinal.connect(self.row_status_proc)
         self.progressBar.setValue(0)
@@ -359,6 +361,16 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
 
         else:
             return
+    
+    def export_meter_list(self):
+        file_path = QtWidgets.QFileDialog.getSaveFileName(self,"save file","" ,"csv files (*.csv);;all files(*.*)")
+        title = ['序号', '通信地址', '波特率', '端口', '规约类型', '费率', '通信密码', '接线方式', '用户类型', '额定电压', '额定电流', '资产号', '采集器地址', 'PT', 'CT']
+ 
+        with open(file_path[0], 'w', newline='') as csvfile:
+            writer  = csv.writer(csvfile)
+            writer.writerow(title)
+            for row in range(self.tableWidget.rowCount()):
+                writer.writerow(self.get_metercfg_from_tableWidget(row).get_str_list())
 
     def get_meter_list(self):
         apdu_text = '0501016000020000'

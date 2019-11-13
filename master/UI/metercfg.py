@@ -195,6 +195,7 @@ class MeterCfg():
             self.get_assetNumber(),
             self.get_collAddr(),
             self.get_PT(),
+            self.get_CT(),
         ]
         
     def encode_to_str(self):
