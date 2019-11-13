@@ -25,7 +25,7 @@ class MeterCfg():
         return True
 
     def set_maddr(self, maddr = '000000000001'):
-        self.maddr = maddr #todo: list to str
+        self.maddr = "%012d" % int(maddr)
         return True
 
     def set_baudrate(self, baudrate = 3):
@@ -41,7 +41,10 @@ class MeterCfg():
         return True
 
     def set_pwd(self, pwd = ''):
-        self.pwd = pwd #todo: list to str
+        if len(pwd) > 0:
+            self.pwd = "%012d" % int(pwd)
+        else:
+            self.pwd = ''
         return True
 
     def set_rate(self, rate = 4):
@@ -65,11 +68,17 @@ class MeterCfg():
         return True
 
     def set_assetNumber(self, assetNumber = ''):
-        self.assetNumber = assetNumber
+        if len(assetNumber) > 0:
+            self.assetNumber = "%012d" % int(assetNumber)
+        else:
+            self.assetNumber = ''
         return True
 
     def set_collAddr(self, collAddr = ''):
-        self.collAddr = collAddr #todo: list to str
+        if len(collAddr) > 0:
+            self.collAddr = "%012d" % int(collAddr)
+        else:
+            self.collAddr = ''
         return True
 
     def set_PT(self, PT = 1):
@@ -87,58 +96,37 @@ class MeterCfg():
         return self.maddr
 
     def get_baudrate(self):
-        if self.baudrate == 0:
-            return '300'
-        elif self.baudrate == 1:
-            return '600'
-        elif self.baudrate == 2:
-            return '1200'
-        elif self.baudrate == 3:
-            return '2400'
-        elif self.baudrate == 4:
-            return '4800'
-        elif self.baudrate == 5:
-            return '7200'
-        elif self.baudrate == 6:
-            return '9600'
-        elif self.baudrate == 7:
-            return '19200'
-        elif self.baudrate == 8:
-            return '38400'
-        elif self.baudrate == 9:
-            return '57600'
-        elif self.baudrate == 10:
-            return '115200'
-        elif self.baudrate == 255:
-            return '自适应(255)'
-        else:
-            return '未知(%d)' % self.baudrate
+        return {
+            0: '300',
+            1: '600',
+            2: '1200',
+            3: '2400',
+            4: '4800',
+            5: '7200',
+            6: '9600',
+            7: '19200',
+            8: '38400',
+            9: '57600',
+            10: '115200',
+            255: '自适应(255)',
+        }.get(self.baudrate, '未知(%d)' % self.baudrate)
 
     def get_port(self):
-        if self.port == 0xF2010201:
-            return '485-1'
-        elif self.port == 0xF2010202:
-            return '485-2'
-        elif self.port == 0xF2010203:
-            return '485-3'
-        elif self.port == 0xF2090201:
-            return 'PLC'
-        else:
-            return '未知(%08X)' % self.port
+        return {
+            0xF2010201: '485-1',
+            0xF2010202: '485-2',
+            0xF2010203: '485-3',
+            0xF2090201: 'PLC',
+        }.get(self.port, '未知(%08X)' % self.port)
 
     def get_ptl(self):
-        if self.ptl == 0:
-            return '未知'
-        elif self.ptl == 1:
-            return '645-1997'
-        elif self.ptl == 2:
-            return '645-2007'
-        elif self.ptl == 3:
-            return '698.45'
-        elif self.ptl == 4:
-            return '188-2004'
-        else:
-            return '无效(%08X)' % self.ptl
+        return {
+            0: '未知',
+            1: '645-1997',
+            2: '645-2007',
+            3: '698.45',
+            4: '188-2004',
+        }.get(self.ptl, '无效(%d)' % self.ptl)
 
     def get_rate(self):
             return '%d' % self.rate
@@ -147,16 +135,12 @@ class MeterCfg():
         return self.pwd
 
     def get_lineMode(self):
-        if self.lineMode == 0:
-            return '未知'
-        elif self.lineMode == 1:
-            return '单相'
-        elif self.lineMode == 2:
-            return '三相三线'
-        elif self.lineMode == 3:
-            return '三相四线'
-        else:
-            return '无效(%08X)' % self.lineMode
+        return {
+            0: '未知',
+            1: '单相',
+            2: '三相三线',
+            3: '三相四线',
+        }.get(self.lineMode, '无效(%d)' % self.lineMode)
 
     def get_usrType(self):
             return '%d' % self.usrType
