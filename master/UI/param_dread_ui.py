@@ -4,6 +4,7 @@ import time
 import threading
 from master.UI.metercfg import MeterCfg
 from master import config
+from master.trans import translate
 from master.trans import common
 from master.UI.param_dread_window import Ui_ParamDreadWindow
 from master.UI import param
@@ -15,27 +16,34 @@ else:
 
 
 class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
-    send_signal = QtCore.Signal(int, int) if config.IS_USE_PYSIDE else QtCore.pyqtSignal(int, int)
+    send_signal = QtCore.Signal(int, int) if config.IS_USE_PYSIDE else QtCore.pyqtSignal(int, int, int)
+    row_status_sinal = QtCore.Signal(int, int) if config.IS_USE_PYSIDE else QtCore.pyqtSignal(int, QtGui.QColor)
     def __init__(self):
         super(ParamDreadWindow, self).__init__()
+        # if config.IS_USE_PYSIDE:
         self.setupUi(self)
+        
+        self.is_sending = False
+        self.is_tmn_ready = False
+        self.service_no = 0xff
 
         self.setWindowTitle('抄表配置')
         self.setWindowIcon(QtGui.QIcon(os.path.join(config.SOFTWARE_PATH, config.MASTER_ICO_PATH)))
         self.PushButton_get.clicked.connect(self.get_meter_list)
-        self.PushButton_set.clicked.connect(self.set_meter_from_tableWidget)
+        self.PushButton_set.clicked.connect(self.set_meter_from_tableWidget_by_color)
         self.PushButton_batchAdd.clicked.connect(self.get_metercfg_from_ui_and_set_to_table_widget)
         self.PushButton_clear.clicked.connect(self.clear_tableWidget)
         self.send_signal.connect(self.send_proc)
-        self.progressBar.setEnabled(False)
+        self.row_status_sinal.connect(self.row_status_proc)
+        self.progressBar.setValue(0)
 
         self.lineEdit_cfg_no.setInputMask('0000')
         self.lineEdit_maddr.setInputMask('999999999999')
         self.lineEdit_pwd.setInputMask('999999999999')
         self.lineEdit_assetNumber.setInputMask('999999999999')
         self.lineEdit_collAddr.setInputMask('999999999999')
-        self.lineEdit_batchAdd.setInputMask('0000')
-        self.lineEdit_delay.setInputMask('00000')
+        # self.lineEdit_batchAdd.setInputMask('0000')
+        # self.lineEdit_delay.setInputMask('00000')
 
         #tableWidget
         items = ['序号', '通信地址', '波特率', '端口', '规约类型', '费率', '通信密码', '接线方式', '用户类型', '额定电压', '额定电流', '资产号', '采集器地址', 'PT', 'CT']
@@ -57,8 +65,12 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         self.tableWidget.setColumnWidth(12, 110) #采集器地址
         self.tableWidget.setColumnWidth(13, 40)  #PT
         self.tableWidget.setColumnWidth(14, 40)  #CT
+        self.tableWidget.setAlternatingRowColors(True)
 
-        self.tableWidget.cellChanged.connect(self.solt_changed)
+        # self.tableWidget.verticalScrollBar().setValue(10)
+        # self.tableWidget.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
+        self.tableWidget.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows) # 只能行选
+        # self.tableWidget.itemChanged.connect(self.solt_itemchanged)
         self.tableWidget.cellClicked.connect(self.get_metercfg_from_tableWidget)
         self.tableWidget.currentCellChanged.connect(self.get_metercfg_from_tableWidget)
         self.tableWidget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)  ######允许右键产生子菜单
@@ -92,7 +104,7 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         for col in range(self.tableWidget.columnCount()):
             self.tableWidget.item(row_pos, col).setBackground(QtCore.Qt.yellow)
 
-    def solt_changed(self, row = -1, column = -1):
+    def solt_itemchanged(self, row = -1, column = -1):
         # if row >= 0 and self.tableWidget.item(row, column) is not None:
         #     self.tableWidget.item(row, column).setBackground(QtCore.Qt.yellow)
         pass
@@ -316,8 +328,10 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
 
     def generate_tableWidgetMenu(self, pos):
         menu = QtWidgets.QMenu()
-        item1 = menu.addAction("下发")
-        item2 = menu.addAction("删除")
+        item1 = menu.addAction("选择")
+        item2 = menu.addAction("取消")
+        item3 = menu.addAction("删除")
+        item4 = menu.addAction("下发")
         action = menu.exec_(self.tableWidget.mapToGlobal(pos))
 
         row_nums = []
@@ -325,14 +339,24 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
             row_nums.append(row.row())
         row_nums = list(set(row_nums)) #去重
 
-        if action == item1:
-            self.set_meter_from_tableWidget()
-            pass
+        if action == item1: #选择
+            for r in row_nums:
+                for col in range(self.tableWidget.columnCount()):
+                    self.tableWidget.item(r, col).setBackground(QtCore.Qt.yellow)
 
-        elif action == item2:
+        elif action == item2: #取消
+            for r in row_nums:
+                for col in range(self.tableWidget.columnCount()):
+                    self.tableWidget.item(r, col).setBackground(QtCore.Qt.transparent)
+                
+        elif action == item3: #删除
             row_nums.sort(reverse=True) #删除需要降序
             for r in row_nums:
                 self.tableWidget.removeRow(r)
+            
+        elif action == item4: #下发
+            self.set_meter_from_tableWidget()
+
         else:
             return
 
@@ -365,9 +389,9 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         #     self.res_b.setStyleSheet('color: red')
         #     self.res_b.setText('失败：' + base_data.get_dar(int(data[offset + 1], 16)))
 
-    def set_meter_thread(self, metercfg_list: [MeterCfg], max_cnt = 20, delay = 0.1):
+    def set_meter_thread(self, metercfg_list: [MeterCfg], max_cnt = 20, delay = 0.1, row_list = [int]):
         total = len(metercfg_list)
-        if total <= 0:
+        if total <= 0 or len(row_list) != total:
             return
         no = 0
 
@@ -380,26 +404,69 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
             apdu_text = '0701016000800001%02X' % cur
             for i in range(cur):
                 apdu_text += metercfg_list[no + i].encode_to_str()
+                self.row_status_sinal.emit(row_list[no + i], QtCore.Qt.magenta)
             apdu_text += '00'
-            config.MASTER_WINDOW.se_apdu_signal.emit(apdu_text)
-            self.send_signal.emit(packet_cur, packet_cnt)
+            # self.tableWidget.selectRow(row_list[no + cur - 1]) #选中最后1个
+
+            self.service_no = config.SERVICE.get_service_no()
+            for err_cnt in range(3):
+                if self.sd_msg(apdu_text, delay) == True:
+                    break
+                self.send_signal.emit(packet_cur, packet_cnt, err_cnt)
+                if not self.is_sending:
+                    return
+            self.send_signal.emit(packet_cur, packet_cnt, 0)
             packet_cur += 1
-            if total > 0:
-                time.sleep(delay)
+            for i in range(cur):
+                self.row_status_sinal.emit(row_list[no + i], QtCore.Qt.green)
             no += cur
         pass
+
+    def sd_msg(self, msg_text: [], tmout = 0.1):
+        delay = 0.0
+        # msg_text[4:5] = '%02X' % self.service_no
+        msg = msg_text[0:4] + ('%02X' % self.service_no) + msg_text[6:]
+        config.MASTER_WINDOW.receive_signal.connect(self.re_msg)
+        config.MASTER_WINDOW.se_apdu_signal.emit(msg)
+        self.is_sending = True
+        self.is_tmn_ready = False
+        while not self.is_tmn_ready:
+            if delay > tmout:
+                return False
+            if not self.is_sending:
+                return False
+            time.sleep(0.01)
+            delay += 0.01
+        return True
+
+    def re_msg(self, msg_text):
+        """re msg"""
+        if self.service_no != common.get_msg_service_no(msg_text):
+            return
+        config.MASTER_WINDOW.receive_signal.disconnect(self.re_msg)
+        msg_trans = translate.Translate(msg_text)
+        if msg_trans.is_access_successed:
+            self.is_tmn_ready = True
+        else:
+            print('收到否认帧，重发...')
+            return
+        self.service_no = 0xff
     
-    def send_proc(self, cur, total):
+    def send_proc(self, cur, total, retry):
         """send proc"""
         if cur == total:
             self.label_status.setText('发送完成')
+        elif retry > 0:
+            self.label_status.setText('发送中({no}/{all}), 重传({re})'.format(no=cur, all=total, re=retry))
         else:
             self.label_status.setText('发送中({no}/{all})'.format(no=cur, all=total))
         if total > 0:
-            self.progressBar.setEnabled(True)
             self.progressBar.setValue((cur * 100) / total)
-        else:
-            self.progressBar.setEnabled(False)
+
+    def row_status_proc(self, row, color: QtGui.QColor):
+        """row status"""
+        for col in range(self.tableWidget.columnCount()):
+            self.tableWidget.item(row, col).setBackground(color)
     
     def set_meter_from_tableWidget(self):
         ''' 搜索当前已选中的行, 生成MeterCfg列表 '''
@@ -407,6 +474,39 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
         row_nums = []
         for row in self.tableWidget.selectionModel().selection().indexes():
             row_nums.append(row.row())
+        row_nums = list(set(row_nums)) #去重
+    
+        total = len(row_nums)
+        if total <= 0:
+            return
+    
+        # self.tableWidget.selectRow(row_nums[0]) #选中第1个
+
+        max_cnt = int(self.lineEdit_cnt.text())
+        if max_cnt <= 0 or max_cnt > 50:
+            max_cnt = 1
+
+        if int(self.lineEdit_delay.text()) == 0:
+            delay = 0.1
+        else:
+            delay = float(self.lineEdit_delay.text()) / 1000 #ms
+
+        metercfg_list = []
+        for i in range(total):
+            metercfg_list.append(self.get_metercfg_from_tableWidget(row_nums[i]))
+
+        threading.Thread(target=self.set_meter_thread,\
+            args=(metercfg_list, max_cnt, delay, row_nums)).start()
+
+        return
+    
+    def set_meter_from_tableWidget_by_color(self):
+        ''' 搜索当前已选中的行, 生成MeterCfg列表 '''
+
+        row_nums = []
+        for row in range(self.tableWidget.rowCount()):
+            if self.tableWidget.item(row, 0).background() == QtCore.Qt.yellow:
+                row_nums.append(row)
         row_nums = list(set(row_nums)) #去重
     
         total = len(row_nums)
@@ -427,7 +527,7 @@ class ParamDreadWindow(QtWidgets.QMainWindow, Ui_ParamDreadWindow):
             metercfg_list.append(self.get_metercfg_from_tableWidget(row_nums[i]))
 
         threading.Thread(target=self.set_meter_thread,\
-            args=(metercfg_list, max_cnt, delay)).start()
+            args=(metercfg_list, max_cnt, delay, row_nums)).start()
 
         return
 
