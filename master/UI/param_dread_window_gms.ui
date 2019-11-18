@@ -6,22 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1395</width>
+    <width>1379</width>
     <height>784</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>抄表配置</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/698/698.ico</normaloff>
+    <normalon>:/698/698.ico</normalon>:/698/698.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_meter">
        <attribute name="title">
@@ -137,7 +142,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>通信地址：</string>
+                  <string>通讯地址：</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -308,7 +313,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>通信端口：</string>
+                  <string>通讯端口：</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -322,32 +327,22 @@
                  </property>
                  <item>
                   <property name="text">
-                   <string>485-1(F2010201)</string>
+                   <string>485-1</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>485-2(F2010202)</string>
+                   <string>485-2</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>485-3(F2010203)</string>
+                   <string>PLC</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>PLC(F2090201)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>交采(F2080201)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>无效</string>
+                   <string>交采</string>
                   </property>
                  </item>
                 </widget>
@@ -502,7 +497,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_pwd">
+                <widget class="QLineEdit" name="comboBox_pwd">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -697,6 +692,13 @@
               </layout>
              </item>
              <item>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_72">
                <item>
                 <widget class="QLabel" name="label_stdV">
@@ -739,13 +741,6 @@
                  <item>
                   <property name="text">
                    <string>100</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_73">
                <item>
                 <widget class="QLabel" name="label_stdA">
@@ -1198,18 +1193,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_status">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="verticalSpacer_15">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -1293,15 +1276,6 @@
               </item>
               <item>
                <widget class="QPushButton" name="PushButton_export">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>50</width>
-                  <height>0</height>
-                 </size>
-                </property>
                 <property name="text">
                  <string>导出</string>
                 </property>
@@ -1370,7 +1344,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>1000</string>
+                 <string>30000</string>
                 </property>
                 <property name="maxLength">
                  <number>5</number>
@@ -1414,7 +1388,7 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>1150</width>
+              <width>1000</width>
               <height>0</height>
              </size>
             </property>
@@ -1457,6 +1431,51 @@
             <attribute name="horizontalHeaderCascadingSectionResizes">
              <bool>false</bool>
             </attribute>
+            <column>
+             <property name="text">
+              <string>配置序号</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>波特率</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>通讯端口</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>规约类型</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>费率个数</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>接线方式</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>用户类型</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>额定电流</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>额定电压</string>
+             </property>
+            </column>
            </widget>
           </item>
          </layout>

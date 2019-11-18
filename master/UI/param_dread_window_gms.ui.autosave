@@ -6,15 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1395</width>
+    <width>1452</width>
     <height>784</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>抄表配置</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/698/698.ico</normaloff>
+    <normalon>:/698/698.ico</normalon>:/698/698.ico</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <layout class="QVBoxLayout" name="verticalLayout_5">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
@@ -137,7 +142,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>通信地址：</string>
+                  <string>通讯地址：</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -308,7 +313,7 @@
                   </size>
                  </property>
                  <property name="text">
-                  <string>通信端口：</string>
+                  <string>通讯端口：</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -322,32 +327,22 @@
                  </property>
                  <item>
                   <property name="text">
-                   <string>485-1(F2010201)</string>
+                   <string>485-1</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>485-2(F2010202)</string>
+                   <string>485-2</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>485-3(F2010203)</string>
+                   <string>PLC</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>PLC(F2090201)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>交采(F2080201)</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>无效</string>
+                   <string>交采</string>
                   </property>
                  </item>
                 </widget>
@@ -502,7 +497,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLineEdit" name="lineEdit_pwd">
+                <widget class="QLineEdit" name="comboBox_pwd">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                    <horstretch>0</horstretch>
@@ -697,55 +692,6 @@
               </layout>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_72">
-               <item>
-                <widget class="QLabel" name="label_stdV">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>110</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>110</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>额定电压(V)：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="comboBox_stdV">
-                 <property name="editable">
-                  <bool>true</bool>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>220</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>100</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_73">
                <item>
                 <widget class="QLabel" name="label_stdA">
@@ -793,6 +739,55 @@
                  <item>
                   <property name="text">
                    <string>5</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_72">
+               <item>
+                <widget class="QLabel" name="label_stdV">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>110</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>110</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>额定电压(V)：</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="comboBox_stdV">
+                 <property name="editable">
+                  <bool>true</bool>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>220</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>100</string>
                   </property>
                  </item>
                 </widget>
@@ -1198,18 +1193,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_status">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="verticalSpacer_15">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -1293,15 +1276,6 @@
               </item>
               <item>
                <widget class="QPushButton" name="PushButton_export">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>50</width>
-                  <height>0</height>
-                 </size>
-                </property>
                 <property name="text">
                  <string>导出</string>
                 </property>
@@ -1370,7 +1344,7 @@
                  </size>
                 </property>
                 <property name="text">
-                 <string>1000</string>
+                 <string>30000</string>
                 </property>
                 <property name="maxLength">
                  <number>5</number>
@@ -1414,7 +1388,7 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>1150</width>
+              <width>1000</width>
               <height>0</height>
              </size>
             </property>
@@ -1457,6 +1431,51 @@
             <attribute name="horizontalHeaderCascadingSectionResizes">
              <bool>false</bool>
             </attribute>
+            <column>
+             <property name="text">
+              <string>配置序号</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>波特率</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>通讯端口</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>规约类型</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>费率个数</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>接线方式</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>用户类型</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>额定电流</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>额定电压</string>
+             </property>
+            </column>
            </widget>
           </item>
          </layout>
@@ -1484,8 +1503,8 @@
           <rect>
            <x>10</x>
            <y>22</y>
-           <width>162</width>
-           <height>22</height>
+           <width>165</width>
+           <height>23</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_86">
@@ -1543,8 +1562,8 @@
           <rect>
            <x>10</x>
            <y>50</y>
-           <width>233</width>
-           <height>22</height>
+           <width>260</width>
+           <height>23</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_87">
@@ -1635,13 +1654,13 @@
          <property name="title">
           <string>采集方式</string>
          </property>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>110</y>
             <width>151</width>
-            <height>52</height>
+            <height>55</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1819,13 +1838,13 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>80</y>
             <width>139</width>
-            <height>22</height>
+            <height>23</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_39">
@@ -1951,13 +1970,13 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>50</y>
             <width>98</width>
-            <height>22</height>
+            <height>23</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_36">
@@ -2007,13 +2026,13 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>20</y>
             <width>195</width>
-            <height>22</height>
+            <height>23</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_43">
@@ -2109,13 +2128,13 @@
           </property>
          </item>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>20</x>
            <y>21</y>
            <width>118</width>
-           <height>22</height>
+           <height>23</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_44">
@@ -2159,13 +2178,13 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>20</x>
            <y>50</y>
-           <width>220</width>
-           <height>22</height>
+           <width>229</width>
+           <height>23</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_42">
@@ -2241,13 +2260,13 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>21</x>
            <y>81</y>
            <width>342</width>
-           <height>22</height>
+           <height>23</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_45">
@@ -3120,13 +3139,13 @@
         <property name="title">
          <string>基本信息</string>
         </property>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>22</y>
            <width>251</width>
-           <height>22</height>
+           <height>23</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_156">
@@ -3200,13 +3219,13 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>50</y>
-           <width>257</width>
-           <height>22</height>
+           <width>259</width>
+           <height>23</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -3332,7 +3351,15 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>260</width>
+           <height>23</height>
+          </rect>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_76">
           <item>
            <widget class="QLabel" name="label_baudrate_2">
@@ -3396,7 +3423,15 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>290</width>
+           <height>23</height>
+          </rect>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_77">
           <item>
            <widget class="QLabel" name="label_port_2">
@@ -3431,7 +3466,15 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>301</width>
+           <height>23</height>
+          </rect>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_78">
           <item>
            <widget class="QLabel" name="label_ptl_2">
@@ -3466,7 +3509,15 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>301</width>
+           <height>23</height>
+          </rect>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_79">
           <item>
            <widget class="QLabel" name="label_rate_2">
@@ -3507,13 +3558,13 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
          <property name="geometry">
           <rect>
            <x>10</x>
            <y>190</y>
            <width>257</width>
-           <height>22</height>
+           <height>23</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -3639,7 +3690,15 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>290</width>
+           <height>23</height>
+          </rect>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_81">
           <item>
            <widget class="QLabel" name="label_lineMode_2">
@@ -3679,7 +3738,15 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>206</width>
+           <height>23</height>
+          </rect>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_82">
           <item>
            <widget class="QLabel" name="label_usrType_2">
@@ -3734,7 +3801,15 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>290</width>
+           <height>23</height>
+          </rect>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_83">
           <item>
            <widget class="QLabel" name="label_stdA_2">
@@ -3774,7 +3849,15 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="">
+        <widget class="QWidget" name="layoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>290</width>
+           <height>23</height>
+          </rect>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_84">
           <item>
            <widget class="QLabel" name="label_stdV_2">
