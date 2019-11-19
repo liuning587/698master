@@ -240,7 +240,7 @@ class MasterWindow(QtWidgets.QMainWindow, MasterWindowUi):
             completer.setCompletionMode(QtWidgets.QCompleter.PopupCompletion)
             self.se_collection_cbox.setCompleter(completer)
         elif select in ['自定义']:
-            self.collec.open_collection_file()
+            self.collec.open_collection_file(self)
         else:
             self.get_current_se_box().setPlainText(self.collec.get_msg(select))
         # self.se_collection_cbox.setCurrentIndex(-1) #qt5 执行这句话之后会再次产生信号, 索引不匹配

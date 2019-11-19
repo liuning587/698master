@@ -692,55 +692,6 @@
               </layout>
              </item>
              <item>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_72">
-               <item>
-                <widget class="QLabel" name="label_stdV">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>110</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>110</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>额定电压(V)：</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="comboBox_stdV">
-                 <property name="editable">
-                  <bool>true</bool>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>220</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>100</string>
               <layout class="QHBoxLayout" name="horizontalLayout_73">
                <item>
                 <widget class="QLabel" name="label_stdA">
