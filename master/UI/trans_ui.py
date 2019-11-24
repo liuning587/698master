@@ -194,7 +194,7 @@ class TransWindow(QtWidgets.QMainWindow, TransWindowUi):
     def take_input_text(self):
         """handle with input text"""
         input_text = self.input_box.toPlainText()
-        res = re.compile(r'([0-9a-fA-F]{2} ){5,}[0-9a-fA-F]{2}')
+        res = re.compile(r'([0-9a-fA-F]{2} ?){5,}[0-9a-fA-F]{2}')
         all_match = res.finditer(input_text)
         self.msg_find_dict = []
         find_num = 0
