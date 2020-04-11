@@ -10,7 +10,7 @@ class Data698():
     def __init__(self, kay):
         if kay != '123456':
             return
-        if time.localtime()[0] > 2019:
+        if time.localtime()[0] > 2020:
             return
         ic_table =\
         [
@@ -178,12 +178,14 @@ class Data698():
             ('19', '属性', '8', 'static', '允许主动上报', 'bool,'),
             ('19', '属性', '9', 'static', '允许与主站通话', 'bool,'),
             ('19', '属性', '10', 'static', '上报通道', 'array:OAD,'),
+            ('19', '属性', '11', 'dyn.', '服务授权状态', 'array:structure{服务类别:unsigned,授权开启剩余时长:unsigned},'),                        
             ('19', '方法', '1', '', '复位', 'NULL,'),
             ('19', '方法', '2', '', '执行', 'Data,'),
             ('19', '方法', '3', '', '数据初始化', ','),
             ('19', '方法', '4', '', '恢复出厂参数', 'array:OAD,'),
             ('19', '方法', '5', '', '事件初始化', ','),
             ('19', '方法', '6', '', '需量初始化', ','),
+            ('19', '方法', '7', '', '服务授权开启', 'structure{服务类别:unsigned,授权开启时长:unsigned},'),
             ('20', '属性', '1', 'static', '逻辑名', 'octet-string,'),
             ('20', '属性', '2', 'static', '对象列表', 'array:structure{对象标识:OI,访问权限:structure{属性访问权限:array:structure{属性ID:unsigned,属性访问权限类别:enum[不可访问<0>,只读<1>,只写<2>,可读写<3>]},方法访问权限:array:structure{方法ID:unsigned,方法访问权限:bool}}},'),
             ('20', '属性', '3', 'static', '应用语境信息', 'structure{协议版本信息:long-unsigned,最大接收APDU尺寸:long-unsigned,最大发送APDU尺寸:long-unsigned,最大可处理APDU尺寸:long-unsigned,协议一致性块:bit-string(64),功能一致性块:bit-string(128),静态超时时间:double-long-unsigned},'),
@@ -218,8 +220,10 @@ class Data698():
             ('22', '属性', '2', 'static', '设备对象列表', 'array,'),
             ('22', '属性', '3', 'static', '设备对象数量', 'unsigned,'),
             ('22', '属性', '4', 'static', '配置参数', 'instance-specific,'),
+            ('22', '属性', '5', 'dyn.', '端口授权状态', 'array:授权开启剩余时间:unsigned,'),                       
             ('22', '方法', '1', '', '复位', 'bit-string,'),
             ('22', '方法', '2', '', '执行', 'Data,'),
+            ('22', '方法', '3', '', '端口授权开启', 'structure{端口序号:unsigned,授权开启时间:unsigned},'),            
             ('23', '属性', '1', 'static', '逻辑名', 'octet-string,'),
             ('23', '属性', '2', 'static', '总加配置表', 'array:structure{参与总加的分路通信地址:TSA,总加标志:enum[正向<0>,反向<1>],运算符标志:enum[加<0>,减<1>]},'),
             ('23', '属性', '3', 'dyn.', '总加有功功率', 'long64,'),
@@ -230,7 +234,7 @@ class Data698():
             ('23', '属性', '8', 'dyn.', '总加日无功电量', 'array:long64,'),
             ('23', '属性', '9', 'dyn.', '总加月有功电量', 'array:long64,'),
             ('23', '属性', '10', 'dyn.', '总加月无功电量', 'array:long64,'),
-            ('23', '属性', '11', 'dyn.', '总加剩余电量（费）', 'long64,'),
+            ('23', '属性', '11', 'dyn.', '总加剩余电量（费）', 'long64<kwh/元|-4>,'),
             ('23', '属性', '12', 'dyn.', '当前功率下浮控控后总加有功功率冻结值', 'long64,'),
             ('23', '属性', '13', 'static', '总加组滑差时间周期', 'unsigned<分|0>,'),
             ('23', '属性', '14', 'static', '总加组功控轮次配置', 'bit-string,'),
@@ -278,6 +282,9 @@ class Data698():
             ('26', '属性', '4', 'static', '终端 IP', 'structure{IP配置方式:enum[DHCP<0>,静态<1>,PPPoE<2>],IP地址:octet-string,子网掩码:octet-string,网关地址:octet-string,PPPoE用户名:visible-string,PPPoE密码:visible-string},'),
             ('26', '属性', '5', 'static', 'MAC 地址', 'octet-string,'),
             ('26', '方法', '1', '', '复位', 'NULL,'),
+            ('201', '属性', '1', 'static', '逻辑名', 'octet-string,'),
+            ('201', '方法', '1', '', '复位', 'integer,'),
+            ('201', '方法', '2', '', '执行', 'Data,'),
         ]
 
         oi_table =\
@@ -522,6 +529,9 @@ class Data698():
             ('2012', '停电抄表电池电压', '6', '变量类', '属性', '2', '', '停电抄表电池电压:long-unsigned<V|-2>,'),
             ('2013', '时钟电池工作时间', '6', '变量类', '属性', '2', '', '时钟电池工作时间:double-long-unsigned<分钟|0>,'),
             ('2014', '电能表运行状态字', '6', '变量类', '属性', '2', '', '电能表运行状态字:array:bit-string,'),
+            ('2015', '电能表跟随上报状态字', '6', '变量类', '属性', '2', '', '电能表跟随上报状态字:bit-string(SIZE(32)),'),
+            ('2015', '电能表跟随上报状态字', '6', '变量类', '属性', '4', '电能表跟随上报模式字', '电能表跟随上报模式字:bit-string(SIZE(32)),'),
+            ('2015', '电能表跟随上报状态字', '6', '变量类', '方法', '127', '', '确认电能表跟随上报状态字:bit-string(SIZE(32)),'),
             ('2017', '当前有功需量', '6', '变量类', '属性', '2', '', '当前有功需量:double-long<kW|-4>,'),
             ('2018', '当前无功需量', '6', '变量类', '属性', '2', '', '当前无功需量:double-long<kvar|-4>,'),
             ('2019', '当前视在需量', '6', '变量类', '属性', '2', '', '当前视在需量:double-long<kVA|-4>,'),
@@ -552,6 +562,7 @@ class Data698():
             ('2102', '日区间统计', '14', '变量类', '属性', '0', '', ''),
             ('2103', '月区间统计', '14', '变量类', '属性', '0', '', ''),
             ('2104', '年区间统计', '14', '变量类', '属性', '0', '', ''),
+            ('2104', '年区间统计', '14', '变量类', '属性', '2', '年区间统计', '年区间统计:unsigned'),
             ('2110', '分钟平均', '15', '变量类', '属性', '0', '', ''),
             ('2111', '小时平均', '15', '变量类', '属性', '0', '', ''),
             ('2112', '日平均', '15', '变量类', '属性', '0', '', ''),
@@ -740,7 +751,8 @@ class Data698():
             ('311B', '终端对电表校时记录', '7', '事件类', '属性', '6', '配置参数', '配置参数:structure{},'),
             ('311C', '电能表数据变更监控记录', '7', '事件类', '属性', '2', '事件记录表', '事件记录表:array 电能表数据变更监控记录,'),
             ('311C', '电能表数据变更监控记录', '7', '事件类', '属性', '6', '配置参数', '配置参数:structure{关联采集任务序号:unsigned},'),
-            ('3200', '功控跳闸记录', '7', '事件类', '属性', '2', '事件记录表', '事件记录表:array:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:OI,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},事件发生后2分钟功率:long64(W,-1),控制对象:OI,跳闸轮次:bit-string(SIZE(8)),功控定值:long64<kWh|-4>,跳闸发生前总加有功功率:long64<kW|-4>,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
+            ('3140', '安全事件变更记录', '7', '事件类', '属性', '2', '事件记录表', '事件记录表:array:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:NULL,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},异常标志:bit-string,以太网远程端口开放信息:array,以太网外联信息:array,远程通信模块端口开发信息:array,远程通信模块外联信息:array,usb设备接入信息:bit-string,本地维护端口信息:bit-string,关键文件目录变更信息:octet-string,以太网登录控制台信息:bit-string,串口登录控制台信息:bit-string,非法操作命令信息:bit-string},'),         
+            ('3200', '功控跳闸记录', '7', '事件类', '属性', '2', '事件记录表', '事件记录表:array:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:OI,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},事件发生后2分钟功率:long64<W|-1>,控制对象:OI,跳闸轮次:bit-string(SIZE(8)),功控定值:long64<kWh|-4>,跳闸发生前总加有功功率:long64<kW|-4>,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
             ('3200', '功控跳闸记录', '7', '事件类', '属性', '6', '配置参数', '配置参数:structure{},'),
             ('3201', '电控跳闸记录', '7', '事件类', '属性', '2', '事件记录表', '事件记录表:array 电控跳闸记录,'),
             ('3201', '电控跳闸记录', '7', '事件类', '属性', '6', '配置参数', '配置参数:structure{},'),
@@ -753,7 +765,7 @@ class Data698():
             ('3302', '编程记录事件单元', '8', '事件类', '属性', '2', '', '编程记录事件单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:NULL,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},编程对象列表:array:OAD,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
             ('3303', '发现未知电能表事件单元', '8', '事件类', '属性', '2', '', '发现未知电能表事件单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:NULL,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},搜表结果:array一个搜表结果,},'),
             ('3304', '跨台区电能表事件单元', '8', '事件类', '属性', '2', '', '跨台区电能表事件单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:NULL,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},跨台区搜表结果:array一个跨台区结果,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
-            ('3305', '功控跳闸记录单元', '8', '事件类', '属性', '2', '', '功控跳闸记录单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:OI,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},事件发生后2分钟功率:long64(W,-1),控制对象:OI,跳闸轮次:bit-string(SIZE(8)),功控定值:long64<kWh|-4>,跳闸发生前总加有功功率:long64<kW|-4>,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
+            ('3305', '功控跳闸记录单元', '8', '事件类', '属性', '2', '', '功控跳闸记录单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:OI,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},事件发生后2分钟功率:long64<W|-1>,控制对象:OI,跳闸轮次:bit-string(SIZE(8)),功控定值:long64<kWh|-4>,跳闸发生前总加有功功率:long64<kW|-4>,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
             ('3306', '电控跳闸记录单元', '8', '事件类', '属性', '2', '', '电控跳闸记录单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:OI,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},控制对象:OI,跳闸轮次:bit-string(SIZE(8)),电控定值:long64<kWh|-4>,跳闸发生时总加电能量:long64<kwh/元|-4>,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
             ('3307', '电控告警事件单元', '8', '事件类', '属性', '2', '', '电控告警事件单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:OI,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},控制对象:OI,电控定值:long64<kWh|-4>,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
             ('3308', '电能表需量超限事件单元', '8', '事件类', '属性', '2', '', '电能表需量超限事件单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:NULL,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},超限期间需量最大值:double-long-unsigned,超限期间正向有功需量最大值:double-long-unsigned,超限期间需量最大值发生时间:date_time_s,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
@@ -770,6 +782,7 @@ class Data698():
             ('3313', '电能表时钟超差记录单元', '8', '事件类', '属性', '2', '', '电能表时钟超差记录单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:TSA,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},电能表时钟DATE:TIME_S,终端当前时钟DATE:TIME_S,第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
             ('3314', '电能表时段表编程事件', '8', '事件类', '属性', '2', '', '电能表时段表编程事件:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:NULL,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},编程时段表对象:OAD,编程前时段表内容:array:structure{时:unsigned,分:unsigned,费率号:unsigned},第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data},'),
             ('3315', '电能表节假日编程事件记录单元', '8', '事件类', '属性', '2', '', '电能表节假日编程事件记录单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:NULL,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},编程节假日对象:OAD,编程前节假日内容:structure{日期:date,日时段表号:unsigned},第1个关联对象属性的数据:Data,…第n个关联对象属性的数据:Data}'),
+            ('3316', '安全事件变更记录单元', '8', '事件类', '属性', '2', '安全事件变更记录单元', '安全事件变更记录单元:structure{事件记录序号:double-long-unsigned,事件发生时间:date_time_s,事件结束时间:date_time_s,事件发生源:NULL,事件上报状态:array:structure{通道:OAD,上报状态:unsigned},异常标志:bit-string,以太网远程端口开放信息:array,以太网外联信息:array,远程通信模块端口开发信息:array,远程通信模块外联信息:array,usb设备接入信息:bit-string,本地维护端口信息:bit-string,关键文件目录变更信息:octet-string,以太网登录控制台信息:bit-string,串口登录控制台信息:bit-string,非法操作命令信息:bit-string},'),            
             ('3320', '新增事件列表', '8', '事件类', '属性', '2', '', '新增事件列表:array:structure{事件对象属性:OAD,上报标志BOOELAN},'),
             ('3320', '新增事件列表', '8', '事件类', '属性', '2', '新增事件列表', ''),
             ('3320', '新增事件列表', '8', '事件类', '属性', '3', '需上报事件对象列表，', ''),
@@ -983,7 +996,8 @@ class Data698():
             ('8001', '保电', '8', '控制类', '方法', '128', '解除保电(参数)', '解除保电(参数):NULL,'),
             ('8001', '保电', '8', '控制类', '方法', '129', '解除自动保电(参数)', '解除自动保电(参数):NULL,'),
             ('8002', '催费告警', '8', '控制类', '属性', '2', '催费告警状态', '催费告警状态:enum[未告警<0>,告警<1>],'),
-            ('8002', '催费告警', '8', '控制类', '方法', '127', '催费告警投入(参数)', '催费告警投入(参数):structure{告警时段：:octet-string(SIZE(3)),告警信息:visible-string(SIZE(200))},'),
+            ('8002', '催费告警', '8', '控制类', '属性', '3', '催费告警参数', '催费告警参数:structure{告警时段:octet-string(SIZE(3)),告警信息:visible-string(SIZE(200))},'),
+            ('8002', '催费告警', '8', '控制类', '方法', '127', '催费告警投入(参数)', '催费告警投入(参数):structure{告警时段:octet-string(SIZE(3)),告警信息:visible-string(SIZE(200))},'),
             ('8002', '催费告警', '8', '控制类', '方法', '128', '取消催费告警(参数)', '取消催费告警(参数):NULL,'),
             ('8003', '一般中文信息', '11', '控制类', '属性', '2', '', '一般中文信息:array:structure{序号:unsigned,发布时间:date_time_s,已阅读标识:bool<True:已阅读,False:未阅读>,信息内容:visible-string(SIZE(200))},'),
             ('8003', '一般中文信息', '11', '控制类', '方法', '127', '添加信息(序号，发布时间，信息内容)', 'structure{序号:unsigned,发布时间:date_time_s,信息内容:visible-string(SIZE(200))},'),
@@ -1065,8 +1079,19 @@ class Data698():
             ('F20A', '脉冲输入设备', '22', '输入输出设备类', '属性', '2', '设备对象列表', '设备对象列表:array:visible-string,'),
             ('F20B', '蓝牙', '22', '输入输出设备类', '属性', '2', '设备对象列表', '设备对象列表:array:structure{端口描述符:visible-string,通信参数:COMDCB},'),
             ('F20B', '蓝牙', '22', '输入输出设备类', '方法', '127', '配置端口(端口号，通信参数)', '配置端口(端口号，通信参数):OAD,'),
+            ('F20E', 'USB', '22', '输入输出设备类', '属性', '2', '设备对象列表', 'array:端口描述符:visible-string,'),
             ('F300', '自动轮显', '17', '显示类', '属性', '0', '', ''),
             ('F301', '按键轮显', '17', '显示类', '属性', '0', '', ''),
+            ('FF00', '校表功能', '201', '输入输出设备类', '方法', '127', '计量清零(参数)', '计量清零(参数):NULL,'),
+            ('FF01', '硬件检测', '201', '输入输出设备类', '属性', '2', '', '硬件检测结果:structure{按键检测:bit-string(SIZE<8>),端子检测:bit-string(SIZE<16>),外接模块检测:enum[异常<0>,正常<1>],铁电检测:enum[异常<0>,正常<1>],通讯模块检测:long,时钟电池检测:long,充电电池检测:long,485-1检测:enum[异常<0>,正常<1>],485-2检测:enum[异常<0>,正常<1>],485-3检测:enum[异常<0>,正常<1>],Esam检测:enum[异常<0>,正常<1>],计量芯片检测:enum[异常<0>,正常<1>],USB检测:enum[异常<0>,正常<1>],时钟芯片检测:enum[异常<0>,正常<1>],网口0检测:enum[异常<0>,正常<3>],CT开路学习情况:enum[异常<0>,正常<1>],CT短路学习情况:enum[异常<0>,正常<1>],网口1检测:enum[异常<0>,正常<3>]},'),
+            ('FF01', '硬件检测', '201', '输入输出设备类', '属性', '3', '', '批量硬件检测结果:structure{按键检测:bit-string(SIZE<8>),端子检测:bit-string(SIZE<16>),铁电检测:bool,信号强度:unsigned,时钟电池电压:long-unsigned,充电电池电压:long-unsigned,485检测结果:bool,Esam检测:bool,计量芯片检测:bool,USB检测:bool,时钟芯片检测:bool,网口0检测:enum[异常<other>,正常<3>],看门狗时间:unsigned,电源管理检测结果:bool,网口1检测:enum[异常<other>,正常<3>]},'),
+            ('FF01', '硬件检测', '201', '输入输出设备类', '方法', '127', '批量硬件检测(参数)', '批量硬件检测(参数):NULL,'),
+            ('FF02', '其他功能', '201', '输入输出设备类', '方法', '127', '将参数数据备份至出厂备份区(参数)', '将参数数据备份至出厂备份区(参数):NULL,'),
+            ('FF03', '读取终端编译时间', '201', '输入输出设备类', '属性', '2', '终端编译时间', 'array:发生时间:date_time_s,'),
+            ('FFB0', '应用连接', '201', '输入输出设备类', '属性', '0', '应用连接', '应用连接:array:structure{应用连接认证密码长度:unsigned,应用连接认证密码:unsigned},'),
+            ('FFC0', '统计时间', '201', '输入输出设备类', '属性', '0', '统计时间', '统计时间:structure{date_time_s},'),
+            ('FFE0', '脉冲旧时标', '201', '输入输出设备类', '属性', '0', '脉冲旧时标', '脉冲旧时标:structure{date_time_s},'),
+            ('FFFF', '修改版本信息', '201', '输入输出设备类', '属性', '2', '版本信息', '版本信息:structure{厂商代码:visible-string(SIZE<4>),软件版本号:visible-string(SIZE<4>),软件版本日期:visible-string(SIZE<4>),硬件版本号:visible-string(SIZE<4>),硬件版本日期:visible-string(SIZE<4>),厂家扩展信息:visible-string(SIZE<4>)},'),
         ]
 
         # 类编号 ic, 属性/方法 am_choice, 属性/方法编号 am_no, 读写属性 rw_type, 属性/方法名 am_name, 数据类型<单位, 换算> data_type(structure)

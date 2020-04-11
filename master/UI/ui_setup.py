@@ -42,6 +42,7 @@ class QuickReadTab(QtWidgets.QWidget):
         self.oad_auto_r_cb = QtWidgets.QCheckBox()
         self.oad_auto_r_cb.setText('读取周期')
         self.oad_auto_r_spin = QtWidgets.QDoubleSpinBox()
+        self.oad_auto_r_spin.setMaximum(30 * 60)
         self.oad_auto_r_spin.setValue(1)
         self.oad_auto_unit_l = QtWidgets.QLabel()
         self.oad_auto_unit_l.setText('秒')

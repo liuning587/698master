@@ -446,10 +446,12 @@ class RemoteUpdateDialog(QtWidgets.QDialog, ui_setup.RemoteUpdateDialogUI):
             block_size = int(self.block_size_box.text().replace('字节', ''))
             self.tmout = int(self.tmout_box.text())
             self.retry = int(self.retry_box.text())
+            self.resumetm = int(self.resume_box.text())
         except ValueError:
             block_size = 1024
             self.tmout = 10
             self.retry = 3
+            self.resumetm = 300
             self.block_size_box.setText(str(block_size))
             self.tmout_box.setText(str(self.tmout))
             self.retry_box.setText(str(self.retry))
@@ -482,6 +484,7 @@ class RemoteUpdateDialog(QtWidgets.QDialog, ui_setup.RemoteUpdateDialogUI):
         self.block_size_box.setEnabled(False)
         self.retry_box.setEnabled(False)
         self.tmout_box.setEnabled(False)
+        self.resume_box.setEnabled(False)
         self.start_update_b.setEnabled(False)
         self.stop_update_b.setEnabled(True)
 
@@ -491,7 +494,8 @@ class RemoteUpdateDialog(QtWidgets.QDialog, ui_setup.RemoteUpdateDialogUI):
             file_text = file.read(file_size)
             file_text = ''.join(['%02X'%x for x in file_text])
             text_list = [file_text[x: x + block_size*2] for x in range(0, len(file_text), block_size*2)]
-            for block_no, block_text in enumerate(text_list):
+            index = 0
+            for block_no, block_text in enumerate(text_list, index):
                 # print('block:', block_no)
                 send_len = (int)(len(block_text)/2)
                 self.service_no = config.SERVICE.get_service_no()
@@ -514,6 +518,23 @@ class RemoteUpdateDialog(QtWidgets.QDialog, ui_setup.RemoteUpdateDialogUI):
                             self.send_tm = time.time()
                             self.send_cnt += 1
                         else:
+                            #超时后每隔1min发送查询升级状态包，直至超时时间结束
+                            self.resume_is_ready = False
+                            self.resume_start_time = time.time()
+                            self.resume_time_step = 0
+                            while time.time() - self.resume_start_time < self.resumetm:
+                                time.sleep(0.05)
+                                if time.time() - self.resume_time_step > 30:
+                                    self.resume_time_step = time.time()
+                                    self.service_no = config.SERVICE.get_service_no()
+                                    start_apdu_text = '0501{piid:02X} f0010400 00'.format(piid=self.service_no)
+                                    config.MASTER_WINDOW.se_apdu_signal.emit(start_apdu_text)
+                                    self.status_label.setText('发送查询升级状态字...')
+                                if self.resume_is_ready == True:
+                                    index = self.index
+                                    break
+                            if self.resume_is_ready == True:
+                                break
                             self.err_quit(err_msg='超时')
                             return
                     if not self.is_updating:
@@ -543,14 +564,48 @@ class RemoteUpdateDialog(QtWidgets.QDialog, ui_setup.RemoteUpdateDialogUI):
         self.start_update_b.setText('开始升级')
         self.status_label.setText('升级成功 ' + ok_msg)
 
+    def take_axdr_len(self, m_list):
+        """take_axdr_len"""
+        offset = 0
+        len_flag = int(m_list[offset], 16)
+        offset += 1
+        if len_flag >> 7 == 0:  # 单字节长度
+            axdr_len = len_flag
+        else:
+            len_of_len = len_flag & 0x7f
+            if len_of_len != 0:
+                string_len = ''
+                for count in range(len_of_len):
+                    string_len += m_list[offset + count]
+                offset += len_of_len
+                axdr_len = int(string_len, 16)
+            else:
+                axdr_len = 128
+        return {'offset': offset, 'len': axdr_len}
 
     def re_msg(self, msg_text):
         """re msg"""
         if self.service_no != common.get_msg_service_no(msg_text):
             return
         msg_trans = translate.Translate(msg_text)
+        print('msg_text', msg_text)
+        apdu_list = common.get_apdu_list2(msg_text)
+        print('apdu_list', apdu_list)
+        offset = 8
         if msg_trans.is_access_successed:
             self.is_tmn_ready = True
+            if (msg_trans.get_access_dict().__contains__('F0010400')):
+                offset += 1
+                bitlen = self.take_axdr_len(m_list=apdu_list[offset:])
+                offset += bitlen.get('offset')
+                index = 0
+                for x in apdu_list[offset:]:
+                    for i in range(0,16):
+                        index += 1  
+                        if (int(x, 16) & (1 << (16 - i)) == 0):
+                            self.resume_is_ready = True
+                            self.index = index
+                            return
         else:
             print('收到否认帧，重发...')
             return
